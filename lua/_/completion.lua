@@ -41,7 +41,9 @@ M.setup = function()
         conjure = true,
         vsnip = true,
         nvim_lsp = true,
-        nvim_lua = true
+        nvim_lua = true,
+        snippets_nvim = true,
+        treesitter = true
       }
     }
 
