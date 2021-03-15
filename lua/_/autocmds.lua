@@ -152,10 +152,6 @@ function M.highlight_overlength()
     -- Ex: I want "\(" I have to do it in Lua as "\\("
     local overlength_pattern = "\\%>" .. (vim.bo.textwidth + 1) .. "v.\\+"
     -- [TODO]: figure out how to convert this to Lua
-    vim.cmd(
-      "let w:last_overlength = matchadd('OverLength', '" ..
-        overlength_pattern .. "')"
-    )
   end
 end
 

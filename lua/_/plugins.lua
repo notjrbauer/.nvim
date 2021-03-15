@@ -115,10 +115,7 @@ local plugins = {
     end,
     requires = {
       {
-        "https://github.com/tjdevries/lsp_extensions.nvim",
-        config = function()
-          require "_.statusline"
-        end
+        "https://github.com/tjdevries/lsp_extensions.nvim"
       },
       {"https://github.com/tjdevries/nlua.nvim"},
       {"https://github.com/glepnir/lspsaga.nvim"},

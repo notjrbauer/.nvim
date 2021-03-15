@@ -38,7 +38,7 @@ augroup MyCustomColors
         \| hi! link StartifyBracket StartifyPath
         \| hi! link StartifyNumber Title
 
-  autocmd ColorScheme plain execute(printf('hi! LineNr gui=NONE cterm=NONE guibg=NONE ctermbg=NONE guifg=%s ctermfg=%s', utils#get_color('VisualNOS', 'bg', 'gui'), utils#get_color('VisualNOS', 'bg', 'cterm')))
+  autocmd ColorScheme tender execute(printf('hi! LineNr gui=NONE cterm=NONE guibg=NONE ctermbg=NONE guifg=%s ctermfg=%s', utils#get_color('VisualNOS', 'bg', 'gui'), utils#get_color('VisualNOS', 'bg', 'cterm')))
         \| hi! Comment cterm=italic gui=italic ctermfg=236 guifg=#555555
         \| execute(printf('hi! Pmenu gui=NONE cterm=NONE guibg=#222222 ctermbg=234 guifg=%s ctermfg=%s', utils#get_color('Pmenu', 'fg', 'gui'), utils#get_color('Pmenu', 'fg', 'cterm')))
         \| hi! link PmenuSel TermCursor
