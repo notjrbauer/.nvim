@@ -55,7 +55,7 @@ xnoremap >  >gv
 " new file in current directory
 nnoremap <Leader>n :e <C-R>=expand("%:p:h") . "/" <CR>
 
-nnoremap <Localleader>n :set nu! rnu!<cr>
+nnoremap <Localleader>n :set nu!<cr>
 nnoremap <Leader>p :t.<left><left>
 nnoremap <leader>e :exe getline(line('.'))<cr>
 
