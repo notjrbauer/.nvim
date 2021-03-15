@@ -32,7 +32,6 @@ local lisps = {"lisp", "scheme", "clojure"}
 local plugins = {
   {"https://github.com/wbthomason/packer.nvim", opt = true},
   {"https://github.com/antoinemadec/FixCursorHold.nvim"},
-  {"https://github.com/jiangmiao/auto-pairs"},
   {
     "https://github.com/junegunn/fzf.vim",
     -- I have the bin globally, so don't build, and just grab plugin directory
@@ -118,7 +117,7 @@ local plugins = {
       {
         "https://github.com/tjdevries/lsp_extensions.nvim",
         config = function()
-          require "_.statusline".activate()
+          require "_.statusline"
         end
       },
       {"https://github.com/tjdevries/nlua.nvim"},
@@ -130,6 +129,16 @@ local plugins = {
         end
       }
     }
+  },
+  {
+    "glepnir/galaxyline.nvim",
+    branch = "main",
+    -- your statusline
+    config = function()
+      require "_.statusline"
+    end,
+    -- some optional icons
+    requires = {{"kyazdani42/nvim-web-devicons"}, {"ryanoasis/vim-devicons"}}
   },
   {
     "https://github.com/hrsh7th/nvim-compe",
@@ -148,7 +157,6 @@ local plugins = {
     end
   },
   {"https://github.com/nvim-treesitter/nvim-treesitter-textobjects"},
-  {"https://github.com/p00f/nvim-ts-rainbow"},
   {
     "https://github.com/nvim-treesitter/playground",
     cmd = "TSPlaygroundToggle"

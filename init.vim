@@ -3,6 +3,7 @@ scriptencoding utf-8
 let g:VIMHOME = exists('*stdpath') ? stdpath('config') : expand(exists('$XDG_CONFIG_HOME') ? $XDG_CONFIG_HOME.'/nvim' : $HOME.'/.config/nvim')
 let g:VIMDATA = exists('*stdpath') ? stdpath('data')   : expand(exists('$XDG_DATA_HOME')   ? $XDG_DATA_HOME.'/nvim'   : $HOME.'/.local/share/nvim')
 
+"
 
 " Skip vim plugins {{{
 " Skip loading menu.vim, saves ~100ms
@@ -49,6 +50,7 @@ endif
 " leader is space, only works with double quotes around it?!
 let g:mapleader="\<Space>"
 let g:maplocalleader=','
+imap jj <Esc>
 
 let g:polyglot_disabled = ['md', 'markdown']
 

@@ -115,7 +115,7 @@ set clipboard=unnamed
 
 " show trailing whitespace
 set list
-set listchars=tab:………,nbsp:░,extends:»,precedes:«,trail:·
+set listchars=tab:··,nbsp:░,extends:»,precedes:«,trail:·
 set nojoinspaces
 set concealcursor=n
 
@@ -150,7 +150,7 @@ set hidden
 " Make tilde command behave like an operator.
 set tildeop
 
-set updatetime=1000
+set updatetime=600
 
 " Make sure diffs are always opened in vertical splits, also match my git settings
 set diffopt+=vertical,algorithm:histogram,indent-heuristic,hiddenoff
@@ -243,3 +243,4 @@ if executable('rg')
   set grepprg=rg\ --vimgrep
   set grepformat=%f:%l:%c:%m
 endif
+
