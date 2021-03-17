@@ -82,7 +82,6 @@ if has('nvim')
 endif
 
 nnoremap <silent> <leader>z :call utils#ZoomToggle()<CR>
-nnoremap <c-g> :call utils#SynStack()<CR>
 
 vmap <silent> <Leader>hu :call utils#HtmlUnEscape()<CR>
 vmap <silent> <Leader>he :call utils#HtmlEscape()<CR>
@@ -99,4 +98,3 @@ function! ExecuteMacroOverVisualRange()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
 
-nnoremap <silent><buffer> K :<C-U>exe 'help '.utils#helptopic()<CR>

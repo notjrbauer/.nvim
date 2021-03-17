@@ -42,6 +42,12 @@ local plugins = {
     requires = {{"https://github.com/lambdalisue/fern.vim"}}
   },
   {"https://github.com/duggiefresh/vim-easydir"},
+  {
+    "https://github.com/kyazdani42/nvim-tree.lua",
+    config = function()
+      require "_.file_tree"
+    end
+  },
   {"https://github.com/junegunn/vim-peekaboo"},
   {
     "https://github.com/mbbill/undotree",
