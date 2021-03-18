@@ -56,7 +56,6 @@ local plugins = {
   },
   {"https://github.com/mhinz/vim-grepper", opt = true, cmd = "Grepper"},
   {"https://github.com/mhinz/vim-sayonara", opt = true, cmd = "Sayonara"},
-  {"https://github.com/mhinz/vim-startify"},
   {"https://github.com/nelstrom/vim-visual-star-search"},
   {"https://github.com/tpope/tpope-vim-abolish"},
   {"https://github.com/tpope/vim-eunuch"},

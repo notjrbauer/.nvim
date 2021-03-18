@@ -26,7 +26,6 @@ M.colorcolumn_blocklist = {
   netrw = true,
   help = true,
   markdown = true,
-  startify = true,
   text = true,
   gitconfig = true,
   gitrebase = true,
@@ -50,7 +49,6 @@ M.heavy_plugins_blocklist = {
   taskedit = true,
   diff = true,
   man = true,
-  startify = true,
   gitcommit = true,
   hgcommit = true,
   vimfiler = true,
@@ -147,11 +145,11 @@ function M.highlight_overlength()
   if should_turn_off_colorcolumn() then
     vim.cmd("match NONE")
   else
+    -- [TODO]: figure out how to convert this to Lua
     -- Use tw + 1 so invisble characters are not marked
     -- I have to escape the escape backslash to be able to pass it to vim
     -- Ex: I want "\(" I have to do it in Lua as "\\("
     local overlength_pattern = "\\%>" .. (vim.bo.textwidth + 1) .. "v.\\+"
-    -- [TODO]: figure out how to convert this to Lua
   end
 end
 
