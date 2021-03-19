@@ -2,7 +2,7 @@ local gl = require("galaxyline")
 local utils = require("_.utils")
 
 local gls = gl.section
-gl.short_line_list = {"defx", "packager", "vista"}
+gl.short_line_list = {}
 
 -- Colors
 local colors = {

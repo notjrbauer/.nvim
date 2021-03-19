@@ -38,6 +38,17 @@ local plugins = {
     requires = {{"https://github.com/junegunn/fzf"}}
   },
   {
+    "nvim-telescope/telescope.nvim",
+    requires = {
+      {"nvim-lua/popup.nvim"},
+      {"nvim-lua/plenary.nvim"},
+      {"nvim-telescope/telescope-media-files.nvim"}
+    },
+    config = function()
+      require "_.telescope"
+    end
+  },
+  {
     "https://github.com/lambdalisue/fern-git.vim",
     requires = {{"https://github.com/lambdalisue/fern.vim"}}
   },
