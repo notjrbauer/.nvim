@@ -15,7 +15,11 @@ local has_extensions = pcall(require, "lsp_extensions")
 local utils = require "_.utils"
 local map_opts = {noremap = true, silent = true}
 
-lspsaga.init_lsp_saga()
+lspsaga.init_lsp_saga(
+  {
+    border_style = 2
+  }
+)
 
 require "_.completion".setup()
 
@@ -180,7 +184,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
-
 
 local servers = {
   cssls = {},

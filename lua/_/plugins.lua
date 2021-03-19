@@ -103,7 +103,6 @@ local plugins = {
     end
   },
   {"https://github.com/tomtom/tcomment_vim"},
-  {"https://github.com/wellle/targets.vim"},
   {"https://github.com/wincent/loupe"},
   {"https://github.com/wincent/terminus"},
   {"https://github.com/tommcdo/vim-lion"},
@@ -191,7 +190,7 @@ local plugins = {
   {"https://github.com/jez/vim-github-hub"},
   -- Clojure
   {"https://github.com/guns/vim-sexp", ft = lisps},
-  {"https://github.com/Olical/conjure", tag = "v4.14.0", ft = lisps},
+  {"https://github.com/Olical/conjure", tag = "v4.16.0", ft = lisps},
   -- }}}
 
   -- Linters & Code quality {{{
