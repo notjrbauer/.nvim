@@ -7,12 +7,12 @@ status.select_symbol = function(cursor_pos, symbol)
     local value_range = {
       ["start"] = {
         character = 0,
-        line = vim.fn.byte2line(symbol.valueRange[1]),
+        line = vim.fn.byte2line(symbol.valueRange[1])
       },
       ["end"] = {
         character = 0,
-        line = vim.fn.byte2line(symbol.valueRange[2]),
-      },
+        line = vim.fn.byte2line(symbol.valueRange[2])
+      }
     }
 
     return require("lsp-status.util").in_range(cursor_pos, value_range)
@@ -22,13 +22,12 @@ end
 status.activate = function()
   nvim_status.config {
     select_symbol = status.select_symbol,
-
     indicator_errors = "",
     indicator_warnings = "",
     indicator_info = "!",
     indicator_hint = "!",
     indicator_ok = "",
-    spinner_frames = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" },
+    spinner_frames = {"⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷"}
   }
 
   nvim_status.register_progress()

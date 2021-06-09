@@ -11,32 +11,47 @@ local sections = require "el.sections"
 local subscribe = require "el.subscribe"
 local lsp_statusline = require "el.plugins.lsp_status"
 
-  local has_lsp_extensions, ws_diagnostics = pcall(require, "lsp_extensions.workspace.diagnostic")
+local has_lsp_extensions, ws_diagnostics = pcall(require, "lsp_extensions.workspace.diagnostic")
 
 -- TODO: Spinning planet extension. Integrated w/ telescope.
 -- ◐ ◓ ◑ ◒
 -- 🌛︎🌝︎🌜︎🌚︎
 -- Show telescope icon / emoji when you open it as well
 
-local git_icon = subscribe.buf_autocmd("el_file_icon", "BufRead", function(_, bufnr)
-  local icon = extensions.file_icon(_, bufnr)
-  if icon then
+local git_icon =
+  subscribe.buf_autocmd(
+  "el_file_icon",
+  "BufRead",
+  function(_, bufnr)
+    local icon = extensions.file_icon(_, bufnr)
+    if icon then
       return icon .. " "
+    end
+
+    return ""
   end
+)
 
-  return ""
-end)
-
-local git_branch = subscribe.buf_autocmd("el_git_branch", "BufEnter", function(window, buffer)
-  local branch = extensions.git_branch(window, buffer)
-  if branch then
-    return " " .. extensions.git_icon() .. " " .. branch
+local git_branch =
+  subscribe.buf_autocmd(
+  "el_git_branch",
+  "BufEnter",
+  function(window, buffer)
+    local branch = extensions.git_branch(window, buffer)
+    if branch then
+      return " " .. extensions.git_icon() .. " " .. branch
+    end
   end
-end)
+)
 
-local git_changes = subscribe.buf_autocmd("el_git_changes", "BufWritePost", function(window, buffer)
-  return extensions.git_changes(window, buffer)
-end)
+local git_changes =
+  subscribe.buf_autocmd(
+  "el_git_changes",
+  "BufWritePost",
+  function(window, buffer)
+    return extensions.git_changes(window, buffer)
+  end
+)
 
 local ws_diagnostic_counts = function(_, buffer)
   if not has_lsp_extensions then
@@ -71,7 +86,7 @@ require("el").setup {
   generator = function(_, _)
     return {
       extensions.gen_mode {
-        format_string = " %s ",
+        format_string = " %s "
       },
       git_branch,
       " ",
@@ -80,7 +95,7 @@ require("el").setup {
       sections.maximum_width(builtin.responsive_file(140, 90), 0.30),
       sections.collapse_builtin {
         " ",
-        builtin.modified_flag,
+        builtin.modified_flag
       },
       sections.split,
       show_current_func,
@@ -96,11 +111,11 @@ require("el").setup {
         "[",
         builtin.help_list,
         builtin.readonly_list,
-        "]",
+        "]"
       },
-      builtin.filetype,
+      builtin.filetype
     }
-  end,
+  end
 }
 
 --[[

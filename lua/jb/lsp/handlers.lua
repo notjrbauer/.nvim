@@ -31,16 +31,17 @@ end
 --     -- },
 --   }
 -- )
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+vim.lsp.handlers["textDocument/publishDiagnostics"] =
+  vim.lsp.with(
   require("lsp_extensions.workspace.diagnostic").handler,
   {
     signs = {
-      severity_limit = "Error",
+      severity_limit = "Error"
     },
     underline = {
-      severity_limit = "Warning",
+      severity_limit = "Warning"
     },
-    virtual_text = true,
+    virtual_text = true
   }
 )
 
@@ -49,9 +50,13 @@ vim.lsp.handlers["textDocument/hover"] = require("lspsaga.hover").handler
 function DoSomeLens()
   print "Lens Requesting..."
 
-  vim.lsp.buf_request(0, "textDocument/codeLens", {
-    textDocument = vim.lsp.util.make_text_document_params(),
-  })
+  vim.lsp.buf_request(
+    0,
+    "textDocument/codeLens",
+    {
+      textDocument = vim.lsp.util.make_text_document_params()
+    }
+  )
 
   print "... Done"
 end
@@ -63,13 +68,13 @@ vim.lsp.handlers["textDocument/codeLens"] = function(err, _, result)
 end
 
 -- Override various utility functions.
--- vim.lsp.diagnostic.show_line_diagnostics = require('lspsaga.diagnostic').show_line_diagnostics
+vim.lsp.diagnostic.show_line_diagnostics = require("lspsaga.diagnostic").show_line_diagnostics
 
 -- TODO: Move to colorbuddy
 vim.cmd [[highlight LspLinesDiagBorder guifg=white]]
 vim.cmd [[highlight LineDiagTuncateLine guifg=white]]
 
-local ns_rename = vim.api.nvim_create_namespace "tj_rename"
+local ns_rename = vim.api.nvim_create_namespace "jb_rename"
 
 local saga_config = require("lspsaga").config_values
 saga_config.rename_prompt_prefix = ">"
@@ -119,7 +124,7 @@ function MyLspRename()
       "n",
       "<esc>",
       '<cmd>lua require("lspsaga.rename").close_rename_win()<CR>',
-      { noremap = true, silent = true }
+      {noremap = true, silent = true}
     )
 
     return
@@ -128,19 +133,24 @@ function MyLspRename()
   local plenary_window = require("plenary.window.float").percentage_range_window(0.5, 0.2)
   vim.api.nvim_buf_set_option(plenary_window.bufnr, "buftype", "prompt")
   vim.fn.prompt_setprompt(plenary_window.bufnr, string.format('Rename "%s" to > ', current_word))
-  vim.fn.prompt_setcallback(plenary_window.bufnr, function(text)
-    vim.api.nvim_win_close(plenary_window.win_id, true)
+  vim.fn.prompt_setcallback(
+    plenary_window.bufnr,
+    function(text)
+      vim.api.nvim_win_close(plenary_window.win_id, true)
 
-    if text ~= "" then
-      vim.schedule(function()
-        vim.api.nvim_buf_delete(plenary_window.bufnr, { force = true })
+      if text ~= "" then
+        vim.schedule(
+          function()
+            vim.api.nvim_buf_delete(plenary_window.bufnr, {force = true})
 
-        vim.lsp.buf.rename(text)
-      end)
-    else
-      print "Nothing to rename!"
+            vim.lsp.buf.rename(text)
+          end
+        )
+      else
+        print "Nothing to rename!"
+      end
     end
-  end)
+  )
 
   vim.cmd [[startinsert]]
 end
@@ -167,8 +177,8 @@ end
 -- end
 
 GoImports = function(timeoutms)
-  local context = { source = { organizeImports = true } }
-  vim.validate { context = { context, "t", true } }
+  local context = {source = {organizeImports = true}}
+  vim.validate {context = {context, "t", true}}
   local params = vim.lsp.util.make_range_params()
   params.context = context
   local method = "textDocument/codeAction"

@@ -1,7 +1,7 @@
 local opt = vim.opt
 
 if require "jb.first_load"() then
-    return
+  return
 end
 
 -- In general, it's a good idea to set this early in your config, because otherwise
@@ -9,11 +9,15 @@ end
 -- leader.
 -- Remap space as leader key
 
+vim.cmd("syntax enable")
 vim.api.nvim_set_keymap("", "<Space>", "<Nop>", {noremap = true, silent = true})
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 --Set jj to be escape in insert mode
 vim.api.nvim_set_keymap("i", "jj", "<esc>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", ";", ":", {noremap = true})
+-- vim.api.nvim_set_keymap("n", "k", "gk", {noremap = true})
+-- vim.api.nvim_set_keymap("n", "j", "gj", {noremap = true})
 
 --Remap for dealing with word wrap
 vim.api.nvim_set_keymap("n", "k", "v:count == 0 ? 'gk' : 'k'", {noremap = true, expr = true, silent = true})

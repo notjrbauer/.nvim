@@ -33,6 +33,8 @@ return require("packer").startup {
     local_use "astronauta.nvim"
     local_use "express_line.nvim"
 
+    use "lewis6991/gitsigns.nvim"
+
     use "marko-cerovac/material.nvim"
     use "jacobb/tender.vim"
     use "bfredl/nvim-luadev"
@@ -83,6 +85,7 @@ return require("packer").startup {
           {
             logging = false,
             filetype = {
+              ["*"] = {exe = {"sed -i 's/[ \t]*$//'"}, stdin = true}, -- remove trailing whitespace
               javascript = {prettier},
               typescript = {prettier},
               ["javascript.jsx"] = {prettier},
@@ -160,6 +163,12 @@ return require("packer").startup {
     use "nvim-lua/lsp_extensions.nvim"
     use "glepnir/lspsaga.nvim"
     use "onsails/lspkind-nvim"
+    use {
+      "ray-x/lsp_signature.nvim",
+      config = function()
+        require "lsp_signature".on_attach()
+      end
+    }
     use {
       "folke/lsp-trouble.nvim",
       config = function()

@@ -43,23 +43,17 @@ local custom_attach = function(client)
 
   nvim_status.on_attach(client)
 
-  vim.api.nvim_set_keymap("n", "<c-space>", "compe#complete()", {silent = true, noremap = true, expr = true})
-  vim.api.nvim_exec([[
-augroup FormatAutogroup
-  autocmd!
-  autocmd BufWritePost * FormatWrite
-augroup END
-]], true)
-
   vim.api.nvim_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", {noremap = true})
   vim.api.nvim_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", {noremap = true})
+  vim.api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", {noremap = true})
+  vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", {noremap = true})
   -- nnoremap { "<space>dp", vim.lsp.diagnostic.goto_prev, buffer = 0 }
   -- nnoremap { "<space>sl", vim.lsp.diagnostic.show_line_diagnostics, buffer = 0 }
 
-  -- nnoremap { "gd", vim.lsp.buf.definition, buffer = 0 }
-  -- nnoremap { "gD", vim.lsp.buf.declaration, buffer = 0 }
+  -- nnoremap {"gd", vim.lsp.buf.definition, buffer = 0}
+  -- nnoremap {"gD", vim.lsp.buf.declaration, buffer = 0}
 
-  -- nnoremap { "<space>cr", MyLspRename, buffer = 0 }
+  -- nnoremap {"<space>cr", MyLspRename, buffer = 0}
 
   telescope_mapper(
     "gr",

@@ -1,26 +1,30 @@
 local opt = vim.opt
 
+opt.undodir = vim.fn.stdpath("cache") .. "/undo"
+opt.undofile = true
+
 --Set colorscheme (order is important here)
+
 -- Ignore compiled files
 opt.wildignore = "__pycache__"
 
 opt.wildignore =
-    opt.wildignore +
-    {
-        ".git",
-        ".swp",
-        "~*",
-        "*.DS_STORE",
-        "*.o",
-        "*~",
-        "*.pyc",
-        "*pycache*"
-    }
+  opt.wildignore +
+  {
+    ".git",
+    ".swp",
+    "~*",
+    "*.DS_STORE",
+    "*.o",
+    "*~",
+    "*.pyc",
+    "*pycache*"
+  }
 
 opt.wildmode = {
-    "longest",
-    "list",
-    "full"
+  "longest",
+  "list",
+  "full"
 }
 
 -- Cool floating window popup menu for completion on command line
@@ -29,20 +33,20 @@ opt.pumblend = 17
 opt.virtualedit = "block"
 opt.wildmode = opt.wildmode - "list"
 opt.wildmode =
-    opt.wildmode +
-    {
-        "longest",
-        "full"
-    }
+  opt.wildmode +
+  {
+    "longest",
+    "full"
+  }
 
 opt.wildoptions = "pum"
 opt.list = true
 opt.listchars = {
-    tab = "··",
-    nbsp = "░",
-    extends = "»",
-    precedes = "«",
-    trail = "·"
+  tab = "··",
+  nbsp = "░",
+  extends = "»",
+  precedes = "«",
+  trail = "·"
 }
 opt.joinspaces = false
 opt.showmode = false
@@ -68,9 +72,9 @@ opt.hlsearch = false
 opt.incsearch = true
 
 -- Tabs
--- opt.autoindent = true
--- opt.cindent = true
--- opt.wrap = true
+opt.autoindent = true
+opt.cindent = true
+opt.wrap = true
 
 opt.tabstop = 2
 opt.shiftwidth = 2
@@ -92,11 +96,11 @@ opt.clipboard = "unnamedplus"
 opt.inccommand = "split"
 opt.swapfile = false -- Living on the edge
 opt.shada = {
-    "!",
-    "'1000",
-    "<50",
-    "s10",
-    "h"
+  "!",
+  "'1000",
+  "<50",
+  "s10",
+  "h"
 }
 
 opt.mouse = "n"
@@ -107,25 +111,28 @@ opt.mouse = "n"
 --
 -- TODO: w, {v, b, l}
 opt.formatoptions =
-    opt.formatoptions - "a" - -- Auto formatting is BAD.
-    "t" + -- Don't auto format my code. I got linters for that.
-    "c" + -- In general, I like it when comments respect textwidth
-    "q" - -- Allow formatting comments w/ gq
-    "o" + -- O and o, don't continue comments
-    "r" + -- But do continue when pressing enter.
-    "n" + -- Indent past the formatlistpat, not underneath it.
-    "j" - -- Auto-remove comments if possible.
-    "2" -- I'm not in gradeschool anymore
+  opt.formatoptions - "a" - -- Auto formatting is BAD.
+  "t" + -- Don't auto format my code. I got linters for that.
+  "c" + -- In general, I like it when comments respect textwidth
+  "q" - -- Allow formatting comments w/ gq
+  "o" + -- O and o, don't continue comments
+  "r" + -- But do continue when pressing enter.
+  "n" + -- Indent past the formatlistpat, not underneath it.
+  "j" - -- Auto-remove comments if possible.
+  "2" -- I'm not in gradeschool anymore
+
+-- set joinspaces
+opt.joinspaces = false -- Two spaces and grade school, we're done
 
 -- set joinspaces
 opt.joinspaces = false -- Two spaces and grade school, we're done
 
 opt.fillchars = {
-    diff = "⣿",
-    vert = "┃",
-    fold = "─",
-    msgsep = "‾",
-    eob = "~"
+  diff = "⣿",
+  vert = "┃",
+  fold = "─",
+  msgsep = "‾",
+  eob = "~"
 }
 
 --Make line numbers default
@@ -137,3 +144,10 @@ opt.hidden = true
 --Case insensitive searching UNLESS /C or capital in search
 opt.ignorecase = true
 opt.smartcase = true
+
+vim.api.nvim_exec([[
+augroup FormatAutogroup
+autocmd!
+autocmd BufWritePost * FormatWrite
+augroup END
+]], true)
