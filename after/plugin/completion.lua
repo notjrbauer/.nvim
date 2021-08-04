@@ -1,7 +1,11 @@
 local shared = require "vim.shared"
 
-vim.opt.completeopt = "menuone,noselect"
-vim.cmd [[set shortmess+=c]]
+vim.opt.completeopt = {"menuone", "noselect"}
+
+-- Don't show the dumb matching stuff.
+vim.opt.shortmess:append "c"
+-- vim.opt.completeopt = "menuone,noselect"
+-- vim.cmd [[set shortmess+=c]]
 
 local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -16,14 +20,17 @@ local check_back_space = function()
   end
 end
 
+function _G.dump(...)
+  local objects = vim.tbl_map(vim.inspect, {...})
+  print(unpack(objects))
+end
+
 -- Use (s-)tab to:
 --- move to prev/next item in completion menuone
 --- jump to prev/next snippet's placeholder
 _G.tab_complete = function()
   if vim.fn.pumvisible() == 1 then
     return t "<C-n>"
-  elseif vim.fn.call("vsnip#available", {1}) == 1 then
-    return t "<Plug>(vsnip-expand-or-jump)"
   elseif check_back_space() then
     return t "<Tab>"
   else

@@ -1,3 +1,6 @@
+vim.cmd [[packadd packer.nvim]]
+print("plugins")
+
 local has = function(x)
   return vim.fn.has(x) == 0
 end
@@ -10,8 +13,11 @@ end)()
 return require("packer").startup {
   function(use)
     use "wbthomason/packer.nvim"
+    
 
-    local local_use = function(first, second)
+    local local_use = function(first, second, opts)
+      opts = opts or {}
+
       local plug_path, home
       if second == nil then
         plug_path = first
@@ -22,20 +28,21 @@ return require("packer").startup {
       end
 
       if vim.fn.isdirectory(vim.fn.expand("~/plugins/" .. plug_path)) == 1 then
-        use("~/plugins/" .. plug_path)
+        opts[1] = "~/plugins/" .. plug_path
       else
-        use(string.format("%s/%s", home, plug_path))
+        opts[1] = string.format("%s/%s", home, plug_path)
       end
+
+      use(opts)
     end
 
     local_use "nlua.nvim"
     local_use "colorbuddy.nvim"
-    local_use "astronauta.nvim"
+    local_use("tjdevries", "astronauta.nvim", {})
     local_use "express_line.nvim"
 
     use "lewis6991/gitsigns.nvim"
 
-    use "marko-cerovac/material.nvim"
     use "jacobb/tender.vim"
     use "bfredl/nvim-luadev"
     -- LSP Plugins:
@@ -160,7 +167,9 @@ return require("packer").startup {
         )
       end
     }
-    use "nvim-lua/lsp_extensions.nvim"
+    -- use "nvim-lua/lsp_extensions.nvim"
+    local_use "lsp_extensions.nvim"
+
     use "glepnir/lspsaga.nvim"
     use "onsails/lspkind-nvim"
     use {
@@ -253,7 +262,8 @@ return require("packer").startup {
     -- }}}
     use {
       "iamcco/markdown-preview.nvim",
-      run = "cd app && yarn install"
+      run = "cd app && yarn install",
+      ft = "markdown"
     }
     -- Linters & Code quality {{{
 

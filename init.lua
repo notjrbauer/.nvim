@@ -1,6 +1,8 @@
 local opt = vim.opt
 
+-- Load neovim options
 if require "jb.first_load"() then
+	print("OO")
   return
 end
 
@@ -11,8 +13,9 @@ end
 
 vim.cmd("syntax enable")
 vim.api.nvim_set_keymap("", "<Space>", "<Nop>", {noremap = true, silent = true})
-vim.g.mapleader = " "
+vim.g.mapleader = ","
 vim.g.maplocalleader = " "
+
 --Set jj to be escape in insert mode
 vim.api.nvim_set_keymap("i", "jj", "<esc>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("n", ";", ":", {noremap = true})
@@ -26,16 +29,10 @@ vim.api.nvim_set_keymap("n", "j", "v:count == 0 ? 'gj' : 'j'", {noremap = true, 
 -- Setup globals that I expect to be always available.
 --  See `./lua/jb/globals/*.lua` for more information.
 require "jb.globals"
-
--- Load packer.nvim files
 require "jb.plugins"
---Set colorscheme (order is important here)
 
 -- Force loading of astronauta first.
 vim.cmd [[runtime plugin/astronauta.vim]]
-
--- Load neovim options
-require "jb.options"
 
 -- Neovim builtin LSP configuration
 require "jb.lsp"

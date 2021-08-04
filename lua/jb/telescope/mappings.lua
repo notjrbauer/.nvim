@@ -16,7 +16,7 @@ local map_tele = function(key, f, options, buffer)
 
   local map_options = {
     noremap = true,
-    silent = true,
+    silent = true
   }
 
   if not buffer then
@@ -26,23 +26,31 @@ local map_tele = function(key, f, options, buffer)
   end
 end
 
-vim.api.nvim_set_keymap("c", "<c-r><c-r>", "<Plug>(TelescopeFuzzyCommandSearch)", { noremap = false, nowait = true })
+vim.api.nvim_set_keymap("c", "<c-r><c-r>", "<Plug>(TelescopeFuzzyCommandSearch)", {noremap = false, nowait = true})
 
 -- Dotfiles
 map_tele("<leader>en", "edit_neovim")
 map_tele("<leader>ez", "edit_zsh")
 
 -- Search
-map_tele("<space>gw", "grep_string", {
-  short_path = true,
-  word_match = "-w",
-  only_sort_text = true,
-  layout_strategy = "vertical",
-  sorter = sorters.get_fzy_sorter(),
-})
-map_tele("<space>f/", "grep_last_search", {
-  layout_strategy = "vertical",
-})
+map_tele(
+  "<space>gw",
+  "grep_string",
+  {
+    short_path = true,
+    word_match = "-w",
+    only_sort_text = true,
+    layout_strategy = "vertical",
+    sorter = sorters.get_fzy_sorter()
+  }
+)
+map_tele(
+  "<space>f/",
+  "grep_last_search",
+  {
+    layout_strategy = "vertical"
+  }
+)
 
 -- Files
 map_tele("<space>ft", "git_files")
@@ -50,7 +58,6 @@ map_tele("<space>fg", "live_grep")
 map_tele("<space>fo", "oldfiles")
 map_tele("<space>fd", "fd")
 map_tele("<space>pp", "project_search")
-map_tele("<space>fv", "find_nvim_source")
 map_tele("<space>fe", "file_browser")
 map_tele("<space>fz", "search_only_certain_files")
 

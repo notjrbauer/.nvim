@@ -1,7 +1,10 @@
+if not pcall(require, "colorbuddy") then
+  return
+end
 -- vim.api.nvim_command('set background=dark')
 -- vim.api.nvim_command('highlight clear')
 
-vim.o.termguicolors = true
+vim.opt.termguicolors = true
 
 require("colorizer").setup()
 
@@ -12,7 +15,7 @@ local g = require("colorbuddy.group").groups
 local s = require("colorbuddy.style").styles
 
 -- Normal c
-Color.new("background", "#eeeeee")
+Color.new("bg", "#eeeeee")
 Color.new("fg", "#282828")
 Color.new("black", "#1d1d1d")
 Color.new("red", "#f43753")
@@ -66,6 +69,7 @@ Group.link("LspReferenceWrite", g.LspReferenceRead)
 -- Group.new("LspReferenceWrite", nil, c.gray0:light())
 
 Group.new("comment", c.gray3:light(), nil, s.italic)
+-- Group.new("FloatBorder", c.white, g.NormalFloat)
 
 -- Group.new("TSKeyword", c.purple, nil, s.underline, c.blue)
 -- Group.new("LuaFunctionCall", c.green, nil, s.underline + s.nocombine, g.TSKeyword.guisp)

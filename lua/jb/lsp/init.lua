@@ -103,6 +103,22 @@ local custom_attach = function(client)
     )
   end
 
+  if filetype == "rust" then
+    vim.cmd [[
+      augroup lsp_buf_format
+        au! BufWritePre <buffer>
+        autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting(nil, 5000)
+      augroup END
+    ]]
+  elseif filetype == "go" then
+    vim.cmd [[
+      augroup lsp_buf_format
+        au! BufWritePre <buffer>
+        autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting()
+      augroup END
+    ]]
+  end
+
   -- if vim.tbl_contains({"go", "rust"}, filetype) then
   --     vim.cmd [[autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()]]
   -- end
@@ -335,7 +351,21 @@ lspconfig.rust_analyzer.setup {
   filetypes = {"rust"},
   on_init = custom_init,
   on_attach = custom_attach,
-  capabilities = nvim_status.capabilities
+  capabilities = updated_capabilities,
+  settings = {
+    ["rust-analyzer"] = {
+      assist = {
+        importGranularity = "module",
+        importPrefix = "by_self"
+      },
+      cargo = {
+        loadOutDirsFromCheck = true
+      },
+      procMacro = {
+        enable = true
+      }
+    }
+  }
 }
 
 --[[

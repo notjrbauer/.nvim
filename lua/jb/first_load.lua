@@ -1,4 +1,7 @@
 -- Install packer
+
+vim.cmd [[packadd packer.nvim]]
+
 local download_packer = function()
   if vim.fn.input "Download Packer? (y for yes)" ~= "y" then
     return
@@ -8,7 +11,8 @@ local download_packer = function()
 
   vim.fn.mkdir(directory, "p")
 
-  local out = vim.fn.system(
+  local out =
+    vim.fn.system(
     string.format("git clone %s %s", "https://github.com/wbthomason/packer.nvim", directory .. "/packer.nvim")
   )
 

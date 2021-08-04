@@ -1,17 +1,14 @@
-" Automatically generated packer.nvim plugin loader code
+-- Automatically generated packer.nvim plugin loader code
 
-if !has('nvim-0.5')
-  echohl WarningMsg
-  echom "Invalid Neovim version for packer.nvim!"
-  echohl None
-  finish
-endif
+if vim.api.nvim_call_function('has', {'nvim-0.5'}) ~= 1 then
+  vim.api.nvim_command('echohl WarningMsg | echom "Invalid Neovim version for packer.nvim! | echohl None"')
+  return
+end
 
-packadd packer.nvim
+vim.api.nvim_command('packadd packer.nvim')
 
-try
+local no_errors = pcall(function()
 
-lua << END
   local time
   local profile_info
   local should_profile = false
@@ -46,7 +43,7 @@ local function save_profiles(threshold)
   _G._packer.profile_output = results
 end
 
-time("Luarocks path setup", true)
+time([[Luarocks path setup]], true)
 local package_path_str = "/Users/johnbauer/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/Users/johnbauer/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/Users/johnbauer/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/Users/johnbauer/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
 local install_cpath_pattern = "/Users/johnbauer/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
@@ -57,8 +54,8 @@ if not string.find(package.cpath, install_cpath_pattern, 1, true) then
   package.cpath = package.cpath .. ';' .. install_cpath_pattern
 end
 
-time("Luarocks path setup", false)
-time("try_loadstring definition", true)
+time([[Luarocks path setup]], false)
+time([[try_loadstring definition]], true)
 local function try_loadstring(s, component, name)
   local success, result = pcall(loadstring(s))
   if not success then
@@ -69,8 +66,8 @@ local function try_loadstring(s, component, name)
   return result
 end
 
-time("try_loadstring definition", false)
-time("Defining packer_plugins", true)
+time([[try_loadstring definition]], false)
+time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
   ["FixCursorHold.nvim"] = {
     loaded = true,
@@ -101,7 +98,7 @@ _G.packer_plugins = {
     path = "/Users/johnbauer/.local/share/nvim/site/pack/packer/start/firenvim"
   },
   ["formatter.nvim"] = {
-    config = { "\27LJ\2\né\2\0\0\a\0\n\1\0185\0\0\0005\1\1\0006\2\2\0009\2\3\0029\2\4\2>\2\15\0016\2\2\0009\2\5\0029\2\6\0026\4\2\0009\4\a\0049\4\b\4)\6\0\0B\4\2\0A\2\0\0?\2\0\0=\1\t\0L\0\2\0\targs\22nvim_buf_get_name\bapi\16shellescape\afn\14textwidth\abo\bvim\1\17\0\0\24--config-precedence\16prefer-file\19--single-quote\25--no-bracket-spacing\17--prose-wrap\valways\19--arrow-parens\valways\21--trailing-comma\ball\14--no-semi\18--end-of-line\alf\18--print-width\0\21--stdin-filepath\1\0\2\nstdin\2\bexe\rprettier#€€À™\0046\0\0\2\0\3\0\0045\0\0\0005\1\1\0=\1\2\0L\0\2\0\targs\1\2\0\0\6-\1\0\2\nstdin\2\bexe\nshfmt#\0\0\1\0\1\0\0025\0\0\0L\0\2\0\1\0\2\bexe\nrefmt\nstdin\2D\0\0\2\0\3\0\0045\0\0\0005\1\1\0=\1\2\0L\0\2\0\targs\1\2\0\0\18--emit=stdout\1\0\2\nstdin\2\bexe\frustfmt>\0\0\2\0\3\0\0045\0\0\0005\1\1\0=\1\2\0L\0\2\0\targs\1\3\0\0\f--quiet\6-\1\0\2\nstdin\2\bexe\nblack'\0\0\1\0\1\0\0025\0\0\0L\0\2\0\1\0\2\bexe\14goimports\nstdin\2$\0\0\1\0\1\0\0025\0\0\0L\0\2\0\1\0\2\bexe\vnixfmt\nstdin\2N\0\0\2\0\3\0\0045\0\0\0005\1\1\0=\1\2\0L\0\2\0\targs\1\4\0\0\19--indent-count\3\2\f--stdin\1\0\2\nstdin\2\bexe\vluafmt³\4\1\0\b\0&\0Q3\0\0\0003\1\1\0006\2\2\0'\4\3\0B\2\2\0029\2\4\0025\4\5\0005\5\t\0005\6\a\0005\a\6\0=\a\b\6=\6\n\0054\6\3\0>\0\1\6=\6\v\0054\6\3\0>\0\1\6=\6\f\0054\6\3\0>\0\1\6=\6\r\0054\6\3\0>\0\1\6=\6\14\0054\6\3\0>\0\1\6=\6\15\0054\6\3\0>\0\1\6=\6\16\0054\6\3\0>\0\1\6=\6\17\0054\6\3\0>\0\1\6=\6\18\0054\6\3\0>\0\1\6=\6\19\0054\6\3\0>\0\1\6=\6\20\0054\6\3\0>\0\1\6=\6\21\0054\6\3\0>\0\1\6=\6\22\0054\6\3\0>\1\1\6=\6\23\0054\6\3\0>\1\1\6=\6\24\0054\6\3\0003\a\25\0>\a\1\6=\6\26\0054\6\3\0003\a\27\0>\a\1\6=\6\28\0054\6\3\0003\a\29\0>\a\1\6=\6\30\0054\6\3\0003\a\31\0>\a\1\6=\6 \0054\6\3\0003\a!\0>\a\1\6=\6\"\0054\6\3\0003\a#\0>\a\1\6=\6$\5=\5%\4B\2\2\1K\0\1\0\rfiletype\blua\0\bnix\0\ago\0\vpython\0\trust\0\vreason\0\tbash\ash\thtml\fgraphql\tyaml\tless\tscss\tjson\bcss\rmarkdown\19typescript.tsx\19javascript.jsx\15typescript\15javascript\6*\1\0\0\bexe\1\0\1\nstdin\2\1\2\0\0\24sed -i 's/[ \t]*$//'\1\0\1\flogging\1\nsetup\14formatter\frequire\0\0\0" },
+    config = { "\27LJ\2\né\2\0\0\a\0\n\1\0185\0\0\0005\1\1\0006\2\2\0009\2\3\0029\2\4\2>\2\15\0016\2\2\0009\2\5\0029\2\6\0026\4\2\0009\4\a\0049\4\b\4)\6\0\0B\4\2\0A\2\0\0?\2\0\0=\1\t\0L\0\2\0\targs\22nvim_buf_get_name\bapi\16shellescape\afn\14textwidth\abo\bvim\1\17\0\0\24--config-precedence\16prefer-file\19--single-quote\25--no-bracket-spacing\17--prose-wrap\valways\19--arrow-parens\valways\21--trailing-comma\ball\14--no-semi\18--end-of-line\alf\18--print-width\0\21--stdin-filepath\1\0\2\bexe\rprettier\nstdin\2#€€À™\0046\0\0\2\0\3\0\0045\0\0\0005\1\1\0=\1\2\0L\0\2\0\targs\1\2\0\0\6-\1\0\2\bexe\nshfmt\nstdin\2#\0\0\1\0\1\0\0025\0\0\0L\0\2\0\1\0\2\nstdin\2\bexe\nrefmtD\0\0\2\0\3\0\0045\0\0\0005\1\1\0=\1\2\0L\0\2\0\targs\1\2\0\0\18--emit=stdout\1\0\2\bexe\frustfmt\nstdin\2>\0\0\2\0\3\0\0045\0\0\0005\1\1\0=\1\2\0L\0\2\0\targs\1\3\0\0\f--quiet\6-\1\0\2\bexe\nblack\nstdin\2'\0\0\1\0\1\0\0025\0\0\0L\0\2\0\1\0\2\nstdin\2\bexe\14goimports$\0\0\1\0\1\0\0025\0\0\0L\0\2\0\1\0\2\nstdin\2\bexe\vnixfmtN\0\0\2\0\3\0\0045\0\0\0005\1\1\0=\1\2\0L\0\2\0\targs\1\4\0\0\19--indent-count\3\2\f--stdin\1\0\2\bexe\vluafmt\nstdin\2³\4\1\0\b\0&\0Q3\0\0\0003\1\1\0006\2\2\0'\4\3\0B\2\2\0029\2\4\0025\4\5\0005\5\t\0005\6\a\0005\a\6\0=\a\b\6=\6\n\0054\6\3\0>\0\1\6=\6\v\0054\6\3\0>\0\1\6=\6\f\0054\6\3\0>\0\1\6=\6\r\0054\6\3\0>\0\1\6=\6\14\0054\6\3\0>\0\1\6=\6\15\0054\6\3\0>\0\1\6=\6\16\0054\6\3\0>\0\1\6=\6\17\0054\6\3\0>\0\1\6=\6\18\0054\6\3\0>\0\1\6=\6\19\0054\6\3\0>\0\1\6=\6\20\0054\6\3\0>\0\1\6=\6\21\0054\6\3\0>\0\1\6=\6\22\0054\6\3\0>\1\1\6=\6\23\0054\6\3\0>\1\1\6=\6\24\0054\6\3\0003\a\25\0>\a\1\6=\6\26\0054\6\3\0003\a\27\0>\a\1\6=\6\28\0054\6\3\0003\a\29\0>\a\1\6=\6\30\0054\6\3\0003\a\31\0>\a\1\6=\6 \0054\6\3\0003\a!\0>\a\1\6=\6\"\0054\6\3\0003\a#\0>\a\1\6=\6$\5=\5%\4B\2\2\1K\0\1\0\rfiletype\blua\0\bnix\0\ago\0\vpython\0\trust\0\vreason\0\tbash\ash\thtml\fgraphql\tyaml\tless\tscss\tjson\bcss\rmarkdown\19typescript.tsx\19javascript.jsx\15typescript\15javascript\6*\1\0\0\bexe\1\0\1\nstdin\2\1\2\0\0\24sed -i 's/[ \t]*$//'\1\0\1\flogging\1\nsetup\14formatter\frequire\0\0\0" },
     loaded = true,
     path = "/Users/johnbauer/.local/share/nvim/site/pack/packer/start/formatter.nvim"
   },
@@ -142,7 +139,7 @@ _G.packer_plugins = {
     path = "/Users/johnbauer/.local/share/nvim/site/pack/packer/start/lsp-status.nvim"
   },
   ["lsp-trouble.nvim"] = {
-    config = { "\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\17auto_preview\1\14auto_fold\2\nsetup\ftrouble\frequire\0" },
+    config = { "\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\14auto_fold\2\17auto_preview\1\nsetup\ftrouble\frequire\0" },
     loaded = true,
     path = "/Users/johnbauer/.local/share/nvim/site/pack/packer/start/lsp-trouble.nvim"
   },
@@ -164,12 +161,9 @@ _G.packer_plugins = {
     path = "/Users/johnbauer/.local/share/nvim/site/pack/packer/start/lspsaga.nvim"
   },
   ["markdown-preview.nvim"] = {
-    loaded = true,
-    path = "/Users/johnbauer/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim"
-  },
-  ["material.nvim"] = {
-    loaded = true,
-    path = "/Users/johnbauer/.local/share/nvim/site/pack/packer/start/material.nvim"
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/johnbauer/.local/share/nvim/site/pack/packer/opt/markdown-preview.nvim"
   },
   ["nlua.nvim"] = {
     loaded = true,
@@ -325,26 +319,30 @@ _G.packer_plugins = {
   }
 }
 
-time("Defining packer_plugins", false)
--- Config for: lsp_signature.nvim
-time("Config for lsp_signature.nvim", true)
-try_loadstring("\27LJ\2\n?\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\14on_attach\18lsp_signature\frequire\0", "config", "lsp_signature.nvim")
-time("Config for lsp_signature.nvim", false)
--- Config for: formatter.nvim
-time("Config for formatter.nvim", true)
-try_loadstring("\27LJ\2\né\2\0\0\a\0\n\1\0185\0\0\0005\1\1\0006\2\2\0009\2\3\0029\2\4\2>\2\15\0016\2\2\0009\2\5\0029\2\6\0026\4\2\0009\4\a\0049\4\b\4)\6\0\0B\4\2\0A\2\0\0?\2\0\0=\1\t\0L\0\2\0\targs\22nvim_buf_get_name\bapi\16shellescape\afn\14textwidth\abo\bvim\1\17\0\0\24--config-precedence\16prefer-file\19--single-quote\25--no-bracket-spacing\17--prose-wrap\valways\19--arrow-parens\valways\21--trailing-comma\ball\14--no-semi\18--end-of-line\alf\18--print-width\0\21--stdin-filepath\1\0\2\nstdin\2\bexe\rprettier#€€À™\0046\0\0\2\0\3\0\0045\0\0\0005\1\1\0=\1\2\0L\0\2\0\targs\1\2\0\0\6-\1\0\2\nstdin\2\bexe\nshfmt#\0\0\1\0\1\0\0025\0\0\0L\0\2\0\1\0\2\bexe\nrefmt\nstdin\2D\0\0\2\0\3\0\0045\0\0\0005\1\1\0=\1\2\0L\0\2\0\targs\1\2\0\0\18--emit=stdout\1\0\2\nstdin\2\bexe\frustfmt>\0\0\2\0\3\0\0045\0\0\0005\1\1\0=\1\2\0L\0\2\0\targs\1\3\0\0\f--quiet\6-\1\0\2\nstdin\2\bexe\nblack'\0\0\1\0\1\0\0025\0\0\0L\0\2\0\1\0\2\bexe\14goimports\nstdin\2$\0\0\1\0\1\0\0025\0\0\0L\0\2\0\1\0\2\bexe\vnixfmt\nstdin\2N\0\0\2\0\3\0\0045\0\0\0005\1\1\0=\1\2\0L\0\2\0\targs\1\4\0\0\19--indent-count\3\2\f--stdin\1\0\2\nstdin\2\bexe\vluafmt³\4\1\0\b\0&\0Q3\0\0\0003\1\1\0006\2\2\0'\4\3\0B\2\2\0029\2\4\0025\4\5\0005\5\t\0005\6\a\0005\a\6\0=\a\b\6=\6\n\0054\6\3\0>\0\1\6=\6\v\0054\6\3\0>\0\1\6=\6\f\0054\6\3\0>\0\1\6=\6\r\0054\6\3\0>\0\1\6=\6\14\0054\6\3\0>\0\1\6=\6\15\0054\6\3\0>\0\1\6=\6\16\0054\6\3\0>\0\1\6=\6\17\0054\6\3\0>\0\1\6=\6\18\0054\6\3\0>\0\1\6=\6\19\0054\6\3\0>\0\1\6=\6\20\0054\6\3\0>\0\1\6=\6\21\0054\6\3\0>\0\1\6=\6\22\0054\6\3\0>\1\1\6=\6\23\0054\6\3\0>\1\1\6=\6\24\0054\6\3\0003\a\25\0>\a\1\6=\6\26\0054\6\3\0003\a\27\0>\a\1\6=\6\28\0054\6\3\0003\a\29\0>\a\1\6=\6\30\0054\6\3\0003\a\31\0>\a\1\6=\6 \0054\6\3\0003\a!\0>\a\1\6=\6\"\0054\6\3\0003\a#\0>\a\1\6=\6$\5=\5%\4B\2\2\1K\0\1\0\rfiletype\blua\0\bnix\0\ago\0\vpython\0\trust\0\vreason\0\tbash\ash\thtml\fgraphql\tyaml\tless\tscss\tjson\bcss\rmarkdown\19typescript.tsx\19javascript.jsx\15typescript\15javascript\6*\1\0\0\bexe\1\0\1\nstdin\2\1\2\0\0\24sed -i 's/[ \t]*$//'\1\0\1\flogging\1\nsetup\14formatter\frequire\0\0\0", "config", "formatter.nvim")
-time("Config for formatter.nvim", false)
+time([[Defining packer_plugins]], false)
 -- Config for: lsp-trouble.nvim
-time("Config for lsp-trouble.nvim", true)
-try_loadstring("\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\17auto_preview\1\14auto_fold\2\nsetup\ftrouble\frequire\0", "config", "lsp-trouble.nvim")
-time("Config for lsp-trouble.nvim", false)
+time([[Config for lsp-trouble.nvim]], true)
+try_loadstring("\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\14auto_fold\2\17auto_preview\1\nsetup\ftrouble\frequire\0", "config", "lsp-trouble.nvim")
+time([[Config for lsp-trouble.nvim]], false)
+-- Config for: formatter.nvim
+time([[Config for formatter.nvim]], true)
+try_loadstring("\27LJ\2\né\2\0\0\a\0\n\1\0185\0\0\0005\1\1\0006\2\2\0009\2\3\0029\2\4\2>\2\15\0016\2\2\0009\2\5\0029\2\6\0026\4\2\0009\4\a\0049\4\b\4)\6\0\0B\4\2\0A\2\0\0?\2\0\0=\1\t\0L\0\2\0\targs\22nvim_buf_get_name\bapi\16shellescape\afn\14textwidth\abo\bvim\1\17\0\0\24--config-precedence\16prefer-file\19--single-quote\25--no-bracket-spacing\17--prose-wrap\valways\19--arrow-parens\valways\21--trailing-comma\ball\14--no-semi\18--end-of-line\alf\18--print-width\0\21--stdin-filepath\1\0\2\bexe\rprettier\nstdin\2#€€À™\0046\0\0\2\0\3\0\0045\0\0\0005\1\1\0=\1\2\0L\0\2\0\targs\1\2\0\0\6-\1\0\2\bexe\nshfmt\nstdin\2#\0\0\1\0\1\0\0025\0\0\0L\0\2\0\1\0\2\nstdin\2\bexe\nrefmtD\0\0\2\0\3\0\0045\0\0\0005\1\1\0=\1\2\0L\0\2\0\targs\1\2\0\0\18--emit=stdout\1\0\2\bexe\frustfmt\nstdin\2>\0\0\2\0\3\0\0045\0\0\0005\1\1\0=\1\2\0L\0\2\0\targs\1\3\0\0\f--quiet\6-\1\0\2\bexe\nblack\nstdin\2'\0\0\1\0\1\0\0025\0\0\0L\0\2\0\1\0\2\nstdin\2\bexe\14goimports$\0\0\1\0\1\0\0025\0\0\0L\0\2\0\1\0\2\nstdin\2\bexe\vnixfmtN\0\0\2\0\3\0\0045\0\0\0005\1\1\0=\1\2\0L\0\2\0\targs\1\4\0\0\19--indent-count\3\2\f--stdin\1\0\2\bexe\vluafmt\nstdin\2³\4\1\0\b\0&\0Q3\0\0\0003\1\1\0006\2\2\0'\4\3\0B\2\2\0029\2\4\0025\4\5\0005\5\t\0005\6\a\0005\a\6\0=\a\b\6=\6\n\0054\6\3\0>\0\1\6=\6\v\0054\6\3\0>\0\1\6=\6\f\0054\6\3\0>\0\1\6=\6\r\0054\6\3\0>\0\1\6=\6\14\0054\6\3\0>\0\1\6=\6\15\0054\6\3\0>\0\1\6=\6\16\0054\6\3\0>\0\1\6=\6\17\0054\6\3\0>\0\1\6=\6\18\0054\6\3\0>\0\1\6=\6\19\0054\6\3\0>\0\1\6=\6\20\0054\6\3\0>\0\1\6=\6\21\0054\6\3\0>\0\1\6=\6\22\0054\6\3\0>\1\1\6=\6\23\0054\6\3\0>\1\1\6=\6\24\0054\6\3\0003\a\25\0>\a\1\6=\6\26\0054\6\3\0003\a\27\0>\a\1\6=\6\28\0054\6\3\0003\a\29\0>\a\1\6=\6\30\0054\6\3\0003\a\31\0>\a\1\6=\6 \0054\6\3\0003\a!\0>\a\1\6=\6\"\0054\6\3\0003\a#\0>\a\1\6=\6$\5=\5%\4B\2\2\1K\0\1\0\rfiletype\blua\0\bnix\0\ago\0\vpython\0\trust\0\vreason\0\tbash\ash\thtml\fgraphql\tyaml\tless\tscss\tjson\bcss\rmarkdown\19typescript.tsx\19javascript.jsx\15typescript\15javascript\6*\1\0\0\bexe\1\0\1\nstdin\2\1\2\0\0\24sed -i 's/[ \t]*$//'\1\0\1\flogging\1\nsetup\14formatter\frequire\0\0\0", "config", "formatter.nvim")
+time([[Config for formatter.nvim]], false)
+-- Config for: lsp_signature.nvim
+time([[Config for lsp_signature.nvim]], true)
+try_loadstring("\27LJ\2\n?\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\14on_attach\18lsp_signature\frequire\0", "config", "lsp_signature.nvim")
+time([[Config for lsp_signature.nvim]], false)
+vim.cmd [[augroup packer_load_aucmds]]
+vim.cmd [[au!]]
+  -- Filetype lazy-loads
+time([[Defining lazy-load filetype autocommands]], true)
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'markdown-preview.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
+time([[Defining lazy-load filetype autocommands]], false)
+vim.cmd("augroup END")
 if should_profile then save_profiles() end
 
-END
+end)
 
-catch
-  echohl ErrorMsg
-  echom "Error in packer_compiled: " .. v:exception
-  echom "Please check your config for correctness"
-  echohl None
-endtry
+if not no_errors then
+  vim.api.nvim_command('echohl ErrorMsg | echom "Error in packer_compiled: ".v:exception | echom "Please check your config for correctness" | echohl None')
+end

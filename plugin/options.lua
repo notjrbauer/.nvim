@@ -145,9 +145,9 @@ opt.hidden = true
 opt.ignorecase = true
 opt.smartcase = true
 
-vim.api.nvim_exec([[
-augroup FormatAutogroup
-autocmd!
-autocmd BufWritePost * FormatWrite
-augroup END
-]], true)
+-- vim.api.nvim_exec([[
+-- augroup FormatAutogroup
+-- autocmd!
+-- autocmd BufWritePost * FormatWrite
+-- augroup END
+-- ]], true)
