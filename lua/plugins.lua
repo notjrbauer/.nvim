@@ -25,6 +25,7 @@ local function plugins(use)
   use({ "wbthomason/packer.nvim", opt = true })
   use({ "williamboman/nvim-lsp-installer" })
   use({ "christoomey/vim-tmux-navigator" })
+  use({ "nathom/filetype.nvim" })
 
   use("tpope/vim-dadbod")
   use({ "kristijanhusak/vim-dadbod-completion" })
@@ -43,25 +44,31 @@ local function plugins(use)
   use("theHamsta/nvim-dap-virtual-text")
   use("mfussenegger/nvim-dap-python")
   use({
-    "https://gitlab.com/yorickpeterse/nvim-dd.git",
+    "luukvbaal/stabilize.nvim",
     config = function()
-      require("dd").setup()
+      require("stabilize").setup()
     end,
   })
-
   -- LSP
   use({
     "neovim/nvim-lspconfig",
     opt = true,
     event = "BufReadPre",
-    wants = { "nvim-lsp-ts-utils", "null-ls.nvim", "lua-dev.nvim", "cmp-nvim-lsp" },
+    wants = {
+      "null-ls.nvim",
+      "nvim-lsp-ts-utils",
+      "lua-dev.nvim",
+      "cmp-nvim-lsp",
+      "nvim-lsp-installer",
+    },
     config = function()
       require("config.lsp")
     end,
     requires = {
-      "jose-elias-alvarez/nvim-lsp-ts-utils",
       "jose-elias-alvarez/null-ls.nvim",
+      "jose-elias-alvarez/nvim-lsp-ts-utils",
       "folke/lua-dev.nvim",
+      "williamboman/nvim-lsp-installer",
     },
   })
 
@@ -123,16 +130,17 @@ local function plugins(use)
     },
     config = [[require('config.treesitter')]],
   })
-
   -- Theme: color schemes
   -- use("tjdevries/colorbuddy.vim")
+  -- use({ "tjdevries/colorbuddy.vim" })
+  -- use({ "tjdevries/gruvbuddy.nvim" })
+  use({ "gruvbox-community/gruvbox" })
   use({
     -- "shaunsingh/nord.nvim",
     -- "shaunsingh/moonlight.nvim",
     -- { "olimorris/onedark.nvim", requires = "rktjmp/lush.nvim" },
     -- "joshdick/onedark.vim",
     -- "wadackel/vim-dogrun",
-    -- { "npxbr/gruvbox.nvim", requires = "rktjmp/lush.nvim" },
     -- "bluz71/vim-nightfly-guicolors",
     -- { "marko-cerovac/material.nvim" },
     -- "sainnhe/edge",
@@ -395,15 +403,6 @@ local function plugins(use)
   })
 
   use({
-    "folke/todo-comments.nvim",
-    cmd = { "TodoTrouble", "TodoTelescope" },
-    event = "BufReadPost",
-    config = function()
-      require("config.todo")
-    end,
-  })
-
-  use({
     "folke/which-key.nvim",
     event = "VimEnter",
     config = function()
@@ -436,8 +435,15 @@ local function plugins(use)
     "andymass/vim-matchup",
     event = "CursorMoved",
   })
-  use({ "camspiers/snap", rocks = { "fzf" }, module = "snap" })
   use("kmonad/kmonad-vim")
+  use({
+    "https://gitlab.com/yorickpeterse/nvim-dd.git",
+    config = function()
+      require("dd").setup({
+        timeout = 1000,
+      })
+    end,
+  })
 end
 
 return packer.setup(config, plugins)

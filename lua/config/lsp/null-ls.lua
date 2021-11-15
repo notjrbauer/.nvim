@@ -1,49 +1,36 @@
-local nls = require("null-ls")
-
 local M = {}
 
-function M.setup(opts)
+function M.setup(options)
+  local nls = require("null-ls")
   nls.config({
     debounce = 150,
     save_after_format = false,
     sources = {
-      nls.builtins.formatting.prettierd.with({
-        filetypes = {
-          "html",
-          "json",
-          "markdown",
-          "scss",
-          "css",
-          "javascript",
-          "javascriptreact",
-          "typescript",
-          "typescriptreact",
-        },
-      }),
-      nls.builtins.formatting.eslint.with({
-        command = "eslint_d",
-      }),
+      nls.builtins.formatting.prettierd,
       nls.builtins.formatting.stylua,
-      nls.builtins.formatting.eslint_d,
-      nls.builtins.formatting.goimports,
-      nls.builtins.formatting.shfmt,
-      nls.builtins.diagnostics.shellcheck.with({ diagnostics_format = "#{m} [#{c}]" }),
+      nls.builtins.formatting.fish_indent,
+      nls.builtins.formatting.fixjson.with({ filetypes = { "jsonc" } }),
+      -- nls.builtins.formatting.eslint_d,
+      nls.builtins.formatting.goimports.with({ filetypes = { "go" } }),
+      nls.builtins.diagnostics.shellcheck,
       nls.builtins.diagnostics.markdownlint,
-      -- nls.builtins.diagnostics.selene,
+      nls.builtins.diagnostics.selene,
       nls.builtins.code_actions.gitsigns,
-      nls.builtins.diagnostics.luacheck.with({ extra_args = { "-g" } }),
     },
   })
+  require("lspconfig")["null-ls"].setup(options)
 end
 
 function M.has_formatter(ft)
   local config = require("null-ls.config").get()
-  local formatters = config._generators["NULL_LS_FORMATTING"]
+  local formatters = config.sources
   for _, f in ipairs(formatters) do
+    print(vim.inspect(f))
     if vim.tbl_contains(f.filetypes, ft) then
       return true
     end
   end
+  return false
 end
 
 return M

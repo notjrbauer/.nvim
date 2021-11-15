@@ -1,0 +1,114 @@
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.o
+*.a
+*.so
+*sessions
+
+# Folders
+_obj
+_test
+.scan_results
+tmp
+
+# Architecture specific extensions/prefixes
+*.[568vq]
+[568vq].out
+
+*.cgo1.go
+*.cgo2.c
+_cgo_defun.c
+_cgo_gotypes.go
+_cgo_export.*
+
+_testmain.go
+
+*.exe
+*.test
+*.prof
+
+.DS_Store
+/bin
+dump.rdb
+
+*.log
+*.espressostorage
+*.codekit
+*.scssc
+
+# Ignore generated sass type declaration files
+*.scss.d.ts
+
+vendor/src/golang.org/x/tools/
+vendor/bin/goimports
+vendor/src/9fans.net/
+vendor/src/code.google.com/
+/client/web-ui/hmr/*
+!/client/web-ui/hmr/index.html
+node_modules
+.eslintcache
+.stylelintcache
+
+b5-*.zip
+*_fuzz.zip
+/b5
+
+server/src/service/config/appversion.go
+vendor/src/github.com/rogpeppe/godef/
+vendor/src/github.com/golang/lint/
+vendor/src/github.com/nsf/gocode/
+server/src/main/web/appversion.go
+
+#do not mark package as dirty because of temp files
+/debian/
+debs-*
+ops/debian/changelog
+ops/debian/destdir_path_var
+
+.vagrant
+
+.lastSeenEventID
+server/resources/database-schema/generated-schema.sql
+server/src/main/debug
+
+.mysql
+.mysql57
+.image
+.activemq
+.rabbitmq
+
+config.json
+/config.original
+
+tools/bin
+
+# VSCode Live Share Database
+.vs
+
+# Ignore delve debug files
+debug
+
+# Ignore bvt bin and downloaded files
+/bvt/.bin
+/bvt/*Emergency Kit*
+/bvt/*Provision Managers Member List*
+/bvt/*.csv
+logs
+
+# Goland
+.idea
+
+# Docker lib integration test fixture symlinks. This is needed because of a bug in dep https://github.com/golang/dep/pull/1626 https://github.com/golang/dep/pull/1625
+vendor/github.com/docker/docker/integration-cli
+
+# Globally ignore dist directories to make code shuffling less annoying when switching branches
+dist
+
+# ignore test logging output
+logs
+
+
+# vscode debugger
+__debug_bin
+
+# Generated files for review environments
+manifests
