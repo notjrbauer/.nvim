@@ -5,7 +5,12 @@ vim.o.timeoutlen = 300
 
 local presets = require("which-key.plugins.presets")
 presets.objects["a("] = nil
-wk.setup({ show_help = false, triggers = "auto", plugins = { spelling = true }, key_labels = { ["<leader>"] = "SPC" } })
+wk.setup({
+  show_help = false,
+  triggers = "auto",
+  plugins = { spelling = true },
+  key_labels = { ["<leader>"] = "SPC" },
+})
 
 -- Move to window using the <ctrl> movement keys
 util.nmap("<left>", "<C-w>h")
@@ -52,6 +57,7 @@ util.onoremap("N", "'nN'[v:searchforward]", { expr = true })
 util.inoremap(",", ",<c-g>u")
 util.inoremap(".", ".<c-g>u")
 util.inoremap(";", ";<c-g>u")
+util.inoremap("jj", "<esc>")
 
 -- telescope <ctrl-r> in command line
 -- vim.cmd([[cmap <C-R> <Plug>(TelescopeFuzzyCommandSearch)]])

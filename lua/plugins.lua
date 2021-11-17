@@ -1,6 +1,7 @@
 local packer = require("util.packer")
 
 local config = {
+  max_jobs = 60,
   profile = {
     enable = true,
     threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
@@ -16,7 +17,7 @@ local config = {
     folke = false,
     ["null-ls.nvim"] = false,
     ["nvim-lspconfig"] = false,
-    -- ["nvim-treesitter"] = true,
+    ["nvim-treesitter"] = false,
   },
 }
 
@@ -28,7 +29,6 @@ local function plugins(use)
   use({ "nathom/filetype.nvim" })
 
   use("tpope/vim-dadbod")
-  use({ "kristijanhusak/vim-dadbod-completion" })
   use({ "kristijanhusak/vim-dadbod-ui" })
 
   -- Debug adapter protocol
@@ -128,7 +128,9 @@ local function plugins(use)
       "nvim-treesitter/nvim-treesitter-textobjects",
       "RRethy/nvim-treesitter-textsubjects",
     },
-    config = [[require('config.treesitter')]],
+    config = function()
+      require("config.treesitter")
+    end,
   })
   -- Theme: color schemes
   -- use("tjdevries/colorbuddy.vim")
@@ -309,7 +311,9 @@ local function plugins(use)
   use({
     "hoob3rt/lualine.nvim",
     event = "VimEnter",
-    config = [[require('config.lualine')]],
+    config = function()
+      require("config.lualine")
+    end,
     wants = "nvim-web-devicons",
   })
 

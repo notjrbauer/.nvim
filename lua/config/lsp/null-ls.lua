@@ -25,7 +25,6 @@ function M.has_formatter(ft)
   local config = require("null-ls.config").get()
   local formatters = config.sources
   for _, f in ipairs(formatters) do
-    print(vim.inspect(f))
     if vim.tbl_contains(f.filetypes, ft) then
       return true
     end
