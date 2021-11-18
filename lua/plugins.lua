@@ -28,9 +28,6 @@ local function plugins(use)
   use({ "christoomey/vim-tmux-navigator" })
   use({ "nathom/filetype.nvim" })
 
-  use("tpope/vim-dadbod")
-  use({ "kristijanhusak/vim-dadbod-ui" })
-
   -- Debug adapter protocol
   --   Have not yet checked this out, but looks awesome.
   -- use 'puremourning/vimspector'
@@ -74,8 +71,6 @@ local function plugins(use)
 
   use({
     "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
-    opt = true,
     config = function()
       require("config.compe")
     end,
@@ -102,6 +97,9 @@ local function plugins(use)
     },
   })
 
+  use("tpope/vim-dadbod")
+  use({ "kristijanhusak/vim-dadbod-completion" })
+  use({ "kristijanhusak/vim-dadbod-ui" })
   use({
     "simrat39/symbols-outline.nvim",
     cmd = { "SymbolsOutline" },

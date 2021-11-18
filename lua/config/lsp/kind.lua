@@ -22,6 +22,7 @@ M.icons = {
   Unit = " ",
   Value = " ",
   Variable = " ",
+  ["vim-dadbod-completion"] = "[DB]",
 }
 
 function M.cmp_format()
