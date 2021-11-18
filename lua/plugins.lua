@@ -1,6 +1,7 @@
 local packer = require("util.packer")
 
 local config = {
+  compile_path = vim.fn.stdpath("config") .. "/lua/packer_compiled.lua",
   max_jobs = 60,
   profile = {
     enable = true,
@@ -24,6 +25,7 @@ local config = {
 local function plugins(use)
   -- Packer can manage itself as an optional plugin
   use({ "wbthomason/packer.nvim", opt = true })
+  use("lewis6991/impatient.nvim")
   use({ "williamboman/nvim-lsp-installer" })
   use({ "christoomey/vim-tmux-navigator" })
   use({ "nathom/filetype.nvim" })
@@ -46,6 +48,9 @@ local function plugins(use)
       require("stabilize").setup()
     end,
   })
+
+  use({ "ray-x/lsp_signature.nvim" })
+
   -- LSP
   use({
     "neovim/nvim-lspconfig",
@@ -99,7 +104,12 @@ local function plugins(use)
 
   use("tpope/vim-dadbod")
   use({ "kristijanhusak/vim-dadbod-completion" })
-  use({ "kristijanhusak/vim-dadbod-ui" })
+  use({
+    "kristijanhusak/vim-dadbod-ui",
+    config = function()
+      require("config.dadbod")
+    end,
+  })
   use({
     "simrat39/symbols-outline.nvim",
     cmd = { "SymbolsOutline" },

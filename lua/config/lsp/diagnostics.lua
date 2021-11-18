@@ -1,5 +1,6 @@
 local lsp = {}
 local diagnostic_ns = vim.api.nvim_create_namespace("lsp_diagnostics")
+
 -- Automatically update diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
   underline = true,
@@ -8,6 +9,11 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
   -- virtual_text = { spacing = 4, prefix = "●" },
   severity_sort = true,
 })
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+  vim.lsp.handlers.signature_help,
+  { boarder = "single", focusable = false }
+)
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 
