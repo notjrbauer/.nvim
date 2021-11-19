@@ -85,6 +85,12 @@ vim.api.nvim_exec(
   false
 )
 
+util.nmap("<C-p>", "<cmd>lua require('fzf-lua').files()<CR>")
+util.nmap("<Leader>b", "<cmd>lua require('fzf-lua').buffers()<CR>")
+util.nmap("<Leader>m", "<cmd>lua require('fzf-lua').command_history()<CR>")
+util.nmap("<Leader>g", "<cmd>lua require('fzf-lua').git_files()<CR>")
+util.nmap("<Leader>lT", "<cmd>lua require('fzf-lua').tags()<CR>")
+util.nmap("<Leader>t", "<cmd>lua require('fzf-lua').btags()<CR>")
 local leader = {
   ["w"] = {
     name = "+windows",
@@ -121,7 +127,7 @@ local leader = {
     g = { "<cmd>Neogit<CR>", "NeoGit" },
     l = {
       function()
-        require("util").float_terminal("lazygit")
+        util.float_terminal("lazygit")
       end,
       "LazyGit",
     },

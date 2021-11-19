@@ -205,6 +205,15 @@ local function plugins(use)
     requires = { "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim" },
   })
 
+  use({ "junegunn/fzf", run = "./install --all && ln -sf $(pwd) ~/.fzf" })
+  use({
+    "ibhagwan/fzf-lua",
+    requires = {
+      "vijaymarupudi/nvim-fzf",
+      "kyazdani42/nvim-web-devicons",
+    }, -- optional for icons
+  })
+
   use({
     "kyazdani42/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeClose" },
