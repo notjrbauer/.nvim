@@ -76,6 +76,7 @@ local function plugins(use)
 
   use({
     "hrsh7th/nvim-cmp",
+    commit = "f2e7685c219d69d7a0feebf5f319e348203ff9b4",
     config = function()
       require("config.compe")
     end,
