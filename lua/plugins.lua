@@ -54,7 +54,6 @@ local function plugins(use)
   -- LSP
   use({
     "neovim/nvim-lspconfig",
-    opt = true,
     event = "BufReadPre",
     wants = {
       "null-ls.nvim",
@@ -76,6 +75,7 @@ local function plugins(use)
 
   use({
     "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
     commit = "f2e7685c219d69d7a0feebf5f319e348203ff9b4",
     config = function()
       require("config.compe")
