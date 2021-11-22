@@ -112,3 +112,6 @@ __debug_bin
 
 # Generated files for review environments
 manifests
+
+packer_compiled.vim
+pack/*
