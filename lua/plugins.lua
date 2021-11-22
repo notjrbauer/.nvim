@@ -75,32 +75,36 @@ local function plugins(use)
 
   use({
     "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
     commit = "f2e7685c219d69d7a0feebf5f319e348203ff9b4",
     config = function()
       require("config.compe")
     end,
-    wants = { "LuaSnip" },
-    requires = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "saadparwaiz1/cmp_luasnip",
-      {
-        "L3MON4D3/LuaSnip",
-        wants = "friendly-snippets",
-        config = function()
-          require("config.snippets")
-        end,
-      },
-      "rafamadriz/friendly-snippets",
-      {
-        "windwp/nvim-autopairs",
-        config = function()
-          require("config.autopairs")
-        end,
-      },
-    },
+  })
+  use({
+    "hrsh7th/cmp-nvim-lsp",
+  })
+  use({
+    "hrsh7th/cmp-buffer",
+  })
+  use({
+    "hrsh7th/cmp-path",
+  })
+  use({
+    "saadparwaiz1/cmp_luasnip",
+  })
+  use({ "rafamadriz/friendly-snippets" })
+  use({
+    "windwp/nvim-autopairs",
+    config = function()
+      require("config.autopairs")
+    end,
+  })
+  use({
+    "L3MON4D3/LuaSnip",
+    wants = "friendly-snippets",
+    config = function()
+      require("config.snippets")
+    end,
   })
 
   use("tpope/vim-dadbod")
