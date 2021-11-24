@@ -61,6 +61,7 @@ util.inoremap("jj", "<esc>")
 
 -- telescope <ctrl-r> in command line
 -- vim.cmd([[cmap <C-R> <Plug>(TelescopeFuzzyCommandSearch)]])
+util.nnoremap("<F3>", "<cmd>NvimTreeToggle<cr>")
 
 -- markdown
 util.nnoremap("=t", "<cmd>TableFormat<cr>")
@@ -86,11 +87,24 @@ vim.api.nvim_exec(
 )
 
 util.nmap("<C-p>", "<cmd>lua require('fzf-lua').files()<CR>")
+util.nmap("<C-f>", "<cmd>lua require('fzf-lua').live_grep_native()<CR>")
 util.nmap("<Leader>b", "<cmd>lua require('fzf-lua').buffers()<CR>")
 util.nmap("<Leader>m", "<cmd>lua require('fzf-lua').command_history()<CR>")
 util.nmap("<Leader>g", "<cmd>lua require('fzf-lua').git_files()<CR>")
 util.nmap("<Leader>lT", "<cmd>lua require('fzf-lua').tags()<CR>")
 util.nmap("<Leader>t", "<cmd>lua require('fzf-lua').btags()<CR>")
+-- vim.cmd([[nnoremap <silent> <F5> :lua require'dap'.continue()<CR>]])
+-- vim.cmd([[nnoremap <silent> <F1> :lua require'dap'.step_into()<CR>]])
+-- vim.cmd([[nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>]])
+
+-- vim.cmd([[nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>]])
+-- vim.cmd([[nnoremap <silent> <leader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>]])
+-- vim.cmd([[nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>]])
+-- vim.cmd([[nnoremap <silent> <space>dh :lua require('dap.ui.variables').hover()<CR>]])
+
+util.nmap("<F5>", "<Plug>VimspectorContinue()")
+util.nmap("<leader>db", "<Plug>VimspectorToggleBreakpoint()")
+util.nmap("<space>dh", "<Plug>VimspectorBalloonEval")
 local leader = {
   ["w"] = {
     name = "+windows",

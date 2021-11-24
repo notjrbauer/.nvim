@@ -41,7 +41,7 @@ local function plugins(use)
   })
   use("rcarriga/nvim-dap-ui")
   use("theHamsta/nvim-dap-virtual-text")
-  use("mfussenegger/nvim-dap-python")
+  use("puremourning/vimspector")
   use({
     "luukvbaal/stabilize.nvim",
     config = function()
