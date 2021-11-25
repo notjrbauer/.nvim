@@ -98,7 +98,7 @@ local function setup_go_configuration(dap)
       request = "attach",
       dlvToolPath = "$GOPATH/bin/dlv",
       program = "${file}",
-      pid = require("dap.utils").pick_process,
+      -- pid = require("dap.utils").pick_process,
       processId = require("dap.utils").pick_process,
     },
   }
@@ -241,7 +241,7 @@ function setup_ui()
       repl = "r",
     },
     sidebar = { size = 80 },
-    tray = { size = 10 },
+    windows = { indent = 1 },
     floating = { max_width = 0.9, max_height = 0.5, border = vim.g.border_chars },
   })
 
