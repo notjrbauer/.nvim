@@ -1,7 +1,6 @@
 local packer = require("util.packer")
 
 local config = {
-  compile_path = vim.fn.stdpath("config") .. "/lua/packer_compiled.lua",
   max_jobs = 60,
   profile = {
     enable = true,
@@ -25,7 +24,6 @@ local config = {
 local function plugins(use)
   -- Packer can manage itself as an optional plugin
   use({ "wbthomason/packer.nvim", opt = true })
-  use("lewis6991/impatient.nvim")
   use({ "williamboman/nvim-lsp-installer" })
   use({ "christoomey/vim-tmux-navigator" })
   use({ "nathom/filetype.nvim" })
@@ -33,14 +31,14 @@ local function plugins(use)
   -- Debug adapter protocol
   --   Have not yet checked this out, but looks awesome.
   -- use 'puremourning/vimspector'
+  use("rcarriga/nvim-dap-ui")
+  use("theHamsta/nvim-dap-virtual-text")
   use({
     "mfussenegger/nvim-dap",
     config = function()
-      require("config.dap")
+      require("config.dap").setup()
     end,
   })
-  use("rcarriga/nvim-dap-ui")
-  use("theHamsta/nvim-dap-virtual-text")
   use("puremourning/vimspector")
   use({
     "luukvbaal/stabilize.nvim",

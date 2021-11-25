@@ -1,4 +1,3 @@
-require("impatient")
 require("util")
 require("options")
 

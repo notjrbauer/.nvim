@@ -114,4 +114,5 @@ __debug_bin
 manifests
 
 packer_compiled.vim
+packer_compiled.lua
 pack/*
