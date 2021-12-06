@@ -47,6 +47,7 @@ local function plugins(use)
     end,
   })
 
+  use({ "kazhala/close-buffers.nvim", cmd = "BDelete" })
   use({ "ray-x/lsp_signature.nvim" })
 
   -- LSP
@@ -73,7 +74,7 @@ local function plugins(use)
 
   use({
     "hrsh7th/nvim-cmp",
-    commit = "f2e7685c219d69d7a0feebf5f319e348203ff9b4",
+    -- commit = "f2e7685c219d69d7a0feebf5f319e348203ff9b4",
     config = function()
       require("config.compe")
     end,
@@ -460,14 +461,14 @@ local function plugins(use)
     event = "CursorMoved",
   })
   use("kmonad/kmonad-vim")
-  use({
-    "https://gitlab.com/yorickpeterse/nvim-dd.git",
-    config = function()
-      require("dd").setup({
-        timeout = 1000,
-      })
-    end,
-  })
+  -- use({
+  --   "https://gitlab.com/yorickpeterse/nvim-dd.git",
+  --   config = function()
+  --     require("dd").setup({
+  --       timeout = 1000,
+  --     })
+  --   end,
+  -- })
 end
 
 return packer.setup(config, plugins)

@@ -53,6 +53,7 @@ cmp.setup({
   },
   documentation = {
     border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+    winhighlight = "NormalFloat:NormalFloat,FloatBorder:TelescopeBorder",
   },
 })
 _ = vim.cmd([[
