@@ -76,7 +76,7 @@ local function setup_go_configuration(dap)
       type = "go",
       name = "Debug",
       request = "launch",
-      program = "${file}",
+      program = "./${relativeFileDirname}",
     },
     {
       type = "go",
