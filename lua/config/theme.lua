@@ -43,9 +43,9 @@ vim.g.tokyonight_transparent = false
 vim.g.tokyonight_hide_inactive_statusline = true
 vim.g.tokyonight_dark_sidebar = true
 vim.g.tokyonight_dark_float = true
--- vim.g.tokyonight_colors = {}
-vim.g.tokyonight_colors = { border = "orange" }
+vim.g.tokyonight_colors = {}
+-- vim.g.tokyonight_colors = { border = "orange" }
 
-vim.g.gruvbox_contrast_dark = "hard"
+-- vim.g.gruvbox_contrast_dark = "hard"
 require("tokyonight").colorscheme()
 -- vim.cmd("colorscheme gruvbox") -- Put your favorite colorscheme here

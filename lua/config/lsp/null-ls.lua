@@ -2,7 +2,7 @@ local M = {}
 
 function M.setup(options)
   local nls = require("null-ls")
-  nls.config({
+  nls.setup({
     debounce = 150,
     save_after_format = false,
     sources = {
@@ -12,13 +12,15 @@ function M.setup(options)
       nls.builtins.formatting.fixjson.with({ filetypes = { "jsonc" } }),
       -- nls.builtins.formatting.eslint_d,
       nls.builtins.formatting.goimports.with({ filetypes = { "go" } }),
-      -- nls.builtins.diagnostics.shellcheck,
+      nls.builtins.diagnostics.shellcheck,
       nls.builtins.diagnostics.markdownlint,
       nls.builtins.diagnostics.selene,
+      nls.builtins.formatting.zigfmt,
       -- nls.builtins.code_actions.gitsigns,
     },
+    on_attach = options.on_attach,
+    root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".nvim.settings.json", ".git"),
   })
-  require("lspconfig")["null-ls"].setup(options)
 end
 
 function M.has_formatter(ft)

@@ -11,8 +11,9 @@ function M.setup(client, bufnr)
     c = {
       name = "+code",
       r = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
+      c = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename (Change)" },
       a = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code Action" },
-      d = { "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", "Line Diagnostics" },
+      d = { "<cmd>lua vim.lsp.diagnostic.open_float()<CR>", "Line Diagnostics" },
       l = {
         name = "+lsp",
         i = { "<cmd>LspInfo<cr>", "Lsp Info" },
@@ -25,8 +26,8 @@ function M.setup(client, bufnr)
       },
     },
     x = {
-      s = { "<cmd>Telescope lsp_document_diagnostics<cr>", "Search Document Diagnostics" },
-      w = { "<cmd>Telescope lsp_workspace_diagnostics<cr>", "Workspace Diagnostics" },
+      s = { "<cmd>Telescope document_diagnostics<cr>", "Search Document Diagnostics" },
+      w = { "<cmd>Telescope workspace_diagnostics<cr>", "Workspace Diagnostics" },
     },
   }
 
@@ -66,7 +67,7 @@ function M.setup(client, bufnr)
   for _, c in ipairs(trigger_chars) do
     util.inoremap(c, function()
       vim.defer_fn(function()
-        -- pcall(vim.lsp.buf.signature_help)
+        pcall(vim.lsp.buf.signature_help)
       end, 0)
       return c
     end, {

@@ -26,7 +26,12 @@ local function plugins(use)
   use({ "wbthomason/packer.nvim", opt = true })
   use({ "williamboman/nvim-lsp-installer" })
   use({ "christoomey/vim-tmux-navigator" })
-  use({ "nathom/filetype.nvim" })
+  use({
+    "nathom/filetype.nvim",
+    config = function()
+      require("config.filetype")
+    end,
+  })
 
   -- Debug adapter protocol
   --   Have not yet checked this out, but looks awesome.
@@ -70,6 +75,16 @@ local function plugins(use)
       "folke/lua-dev.nvim",
       "williamboman/nvim-lsp-installer",
     },
+  })
+
+  use({
+    "SmiteshP/nvim-gps",
+    requires = "nvim-treesitter/nvim-treesitter",
+    wants = "nvim-treesitter",
+    module = "nvim-gps",
+    config = function()
+      require("nvim-gps").setup({ separator = "   " })
+    end,
   })
 
   use({
@@ -120,15 +135,15 @@ local function plugins(use)
   })
 
   use({
-    "b3nj5m1n/kommentary",
+    "numToStr/Comment.nvim",
     opt = true,
-    wants = "nvim-ts-context-commentstring",
-    keys = { "gc", "gcc" },
+    keys = { "gc", "gcc", "gbc" },
     config = function()
       require("config.comments")
     end,
-    requires = "JoosepAlviste/nvim-ts-context-commentstring",
   })
+
+  use({ "JoosepAlviste/nvim-ts-context-commentstring", module = "ts_context_commentstring" })
 
   use({
     "nvim-treesitter/nvim-treesitter",
@@ -136,7 +151,7 @@ local function plugins(use)
     opt = true,
     event = "BufRead",
     requires = {
-      { "nvim-treesitter/playground", cmd = "TSHighlightCapturesUnderCursor" },
+      { "nvim-treesitter/playground", opt = true, cmd = "TSHighlightCapturesUnderCursor" },
       "nvim-treesitter/nvim-treesitter-textobjects",
       "RRethy/nvim-treesitter-textsubjects",
     },
@@ -173,10 +188,16 @@ local function plugins(use)
     -- "Th3Whit3Wolf/one-nvim"
 
     "folke/tokyonight.nvim",
+
     -- event = "VimEnter",
     config = function()
       require("config.theme")
     end,
+  })
+
+  use({
+    "catppuccin/nvim",
+    as = "catppuccin",
   })
 
   -- Theme: icons
@@ -438,6 +459,7 @@ local function plugins(use)
   use({
     "sindrets/diffview.nvim",
     cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
+    module = "diffview",
     config = function()
       require("config.diffview")
     end,
@@ -459,6 +481,9 @@ local function plugins(use)
   use({
     "andymass/vim-matchup",
     event = "CursorMoved",
+    config = function()
+      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
+    end,
   })
   use("kmonad/kmonad-vim")
   -- use({

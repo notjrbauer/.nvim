@@ -1,4 +1,4 @@
-require("config.lsp.diagnostics")
+require("config.lsp.diagnostics").setup()
 require("config.lsp.kind").setup()
 
 local function on_attach(client, bufnr)
@@ -32,7 +32,19 @@ local servers = {
   sumneko_lua = {},
   vimls = {},
   eslint = {},
-  ansiblels = {},
+  zls = {},
+  rust_analyzer = {
+    settings = {
+      ["rust-analyzer"] = {
+        cargo = { allFeatures = true },
+        -- enable clippy on save
+        checkOnSave = {
+          command = "clippy",
+          extraArgs = { "--no-deps" },
+        },
+      },
+    },
+  },
   -- tailwindcss = {},
 }
 
@@ -43,6 +55,9 @@ require("lua-dev").setup()
 local options = {
   on_attach = on_attach,
   capabilities = capabilities,
+  flags = {
+    debounce_text_changes = 150,
+  },
 }
 require("config.lsp.null-ls").setup(options)
 require("config.lsp.install").setup(servers, options)

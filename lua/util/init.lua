@@ -106,15 +106,15 @@ function M.log(msg, hl, name)
 end
 
 function M.warn(msg, name)
-  M.log(msg, "LspDiagnosticsDefaultWarning", name)
+  vim.notify(msg, vim.log.levels.WARN, { title = name })
 end
 
 function M.error(msg, name)
-  M.log(msg, "LspDiagnosticsDefaultError", name)
+  vim.notify(msg, vim.log.levels.ERROR, { title = name })
 end
 
 function M.info(msg, name)
-  M.log(msg, "LspDiagnosticsDefaultInformation", name)
+  vim.notify(msg, vim.log.levels.INFO, { title = name })
 end
 
 function M.toggle(option, silent)
@@ -173,6 +173,31 @@ function M.lsp_config()
     ret[client.name] = { root_dir = client.config.root_dir, settings = client.config.settings }
   end
   dump(ret)
+end
+
+function M.colors(filter)
+  local defs = {}
+  for hl_name, hl in pairs(vim.api.nvim__get_hl_defs(0)) do
+    if hl_name:find(filter) then
+      local def = {}
+      if hl.link then
+        def.link = hl.link
+      end
+      for key, def_key in pairs({ foreground = "fg", background = "bg", special = "sp" }) do
+        if type(hl[key]) == "number" then
+          local hex = string.format("#%06x", hl[key])
+          def[def_key] = hex
+        end
+      end
+      for _, style in pairs({ "bold", "italic", "underline", "undercurl", "reverse" }) do
+        if hl[style] then
+          def.style = (def.style and (def.style .. ",") or "") .. style
+        end
+      end
+      defs[hl_name] = def
+    end
+  end
+  dump(defs)
 end
 
 return M

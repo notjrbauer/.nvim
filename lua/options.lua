@@ -8,7 +8,6 @@ vim.bo.undofile = true ]]
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
-vim.g.node_host_prog = "/Users/folke/.pnpm-global/5/node_modules/neovim/bin/cli.js"
 vim.opt.autowrite = true -- enable auto write
 vim.opt.clipboard = "unnamedplus" -- sync with system clipboard
 vim.opt.conceallevel = 2 -- Hide * markup for bold and italic
@@ -62,6 +61,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_matchit = 1
 vim.g.loaded_matchparen = 1
+vim.g.loaded_fzf = 1
 
 -- Use proper syntax highlighting in code blocks
 local fences = {
@@ -106,10 +106,6 @@ cmd([[
 
 -- Highlight on yank
 cmd("au TextYankPost * lua vim.highlight.on_yank {}")
-
--- ftdetect
-cmd([[autocmd BufRead,BufNewFile *.fish setfiletype fish]])
-cmd([[autocmd BufRead,BufNewFile *.nix setfiletype nix]])
 
 -- windows to close with "q"
 vim.cmd([[autocmd FileType help,startuptime,qf,lspinfo nnoremap <buffer><silent> q :close<CR>]])
