@@ -240,9 +240,26 @@ function setup_ui()
       edit = "e",
       repl = "r",
     },
-    sidebar = { size = 80 },
-    windows = { indent = 1 },
-    floating = { max_width = 0.9, max_height = 0.5, border = vim.g.border_chars },
+    layouts = {
+      {
+        elements = {
+          "scopes",
+          "breakpoints",
+          "stacks",
+          "watches",
+        },
+        size = 40,
+        position = "left",
+      },
+      {
+        elements = {
+          "repl",
+          "console",
+        },
+        size = 10,
+        position = "bottom",
+      },
+    },
   })
 
   vim.fn.sign_define("DapBreakpoint", { text = "→", texthl = "Error", linehl = "", numhl = "" })

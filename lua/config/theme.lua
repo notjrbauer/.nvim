@@ -49,3 +49,5 @@ vim.g.tokyonight_colors = {}
 -- vim.g.gruvbox_contrast_dark = "hard"
 require("tokyonight").colorscheme()
 -- vim.cmd("colorscheme gruvbox") -- Put your favorite colorscheme here
+-- require("kanagawa").setup()
+-- vim.cmd("colorscheme kanagawa") -- Put your favorite colorscheme here

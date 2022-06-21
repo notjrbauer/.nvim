@@ -4,10 +4,16 @@ M.signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 
 function M.setup()
   -- Automatically update diagnostics
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = true,
+  vim.diagnostic.config({
+    virtual_text = false,
+    signs = true,
+    underline = false,
     update_in_insert = false,
-    virtual_text = { spacing = 4, prefix = "●" },
+  })
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = false,
+    update_in_insert = false,
+    virtual_text = false,
     severity_sort = true,
   })
 

@@ -3,7 +3,8 @@ local function clock()
 end
 
 local function holidays()
-  return "🎅🎄🌟🎁"
+  return "🌴"
+  -- return "🎅🎄🌟🎁"
 end
 
 local function lsp_progress(_, is_active)
@@ -40,6 +41,7 @@ local config = {
     section_separators = { left = "", right = "" },
     component_separators = { left = "", right = "" },
     icons_enabled = true,
+    globalstatus = true,
   },
   sections = {
     lualine_a = { "mode" },
@@ -47,18 +49,7 @@ local config = {
     lualine_c = {
       { "diagnostics", sources = { "nvim_diagnostic" } },
       { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-      { "filename", path = 1, symbols = { modified = "  ", readonly = "" } },
-      {
-        function()
-          local gps = require("nvim-gps")
-          return gps.get_location()
-        end,
-        cond = function()
-          local gps = require("nvim-gps")
-          return pcall(require, "nvim-treesitter.parsers") and gps.is_available()
-        end,
-        color = { fg = "#ff9e64" },
-      },
+      { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
     },
     lualine_x = { lsp_progress, holidays },
     lualine_y = { "location" },

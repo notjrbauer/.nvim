@@ -13,7 +13,6 @@ function M.setup(options)
       -- nls.builtins.formatting.eslint_d,
       nls.builtins.formatting.goimports.with({ filetypes = { "go" } }),
       nls.builtins.diagnostics.shellcheck,
-      nls.builtins.diagnostics.markdownlint,
       nls.builtins.diagnostics.selene,
       nls.builtins.formatting.zigfmt,
       -- nls.builtins.code_actions.gitsigns,

@@ -186,7 +186,7 @@ local leader = {
     s = {
       function()
         require("telescope.builtin").lsp_document_symbols({
-          symbols = { "Class", "Function", "Method", "Constructor", "Interface", "Module" },
+          symbols = { "Class", "Function", "Method", "Constructor", "Interface", "Module", "Struct", "Trait" },
         })
       end,
       "Goto Symbol",

@@ -164,6 +164,7 @@ local function plugins(use)
   -- use({ "tjdevries/colorbuddy.vim" })
   -- use({ "tjdevries/gruvbuddy.nvim" })
   use({ "gruvbox-community/gruvbox" })
+  use({ "rebelot/kanagawa.nvim" })
   use({
     -- "shaunsingh/nord.nvim",
     -- "shaunsingh/moonlight.nvim",
@@ -292,7 +293,7 @@ local function plugins(use)
 
   -- Tabs
   use({
-    "akinsho/nvim-bufferline.lua",
+    "akinsho/bufferline.nvim",
     event = "BufReadPre",
     wants = "nvim-web-devicons",
     config = function()
@@ -302,7 +303,7 @@ local function plugins(use)
 
   -- Terminal
   use({
-    "akinsho/nvim-toggleterm.lua",
+    "akinsho/toggleterm.nvim",
     keys = "<M-`>",
     config = function()
       require("config.terminal")
@@ -432,8 +433,6 @@ local function plugins(use)
   use({ "tweekmonster/startuptime.vim", cmd = "StartupTime" })
 
   use({ "mbbill/undotree", cmd = "UndotreeToggle" })
-
-  use({ "mjlbach/babelfish.nvim", module = "babelfish" })
 
   use({
     "folke/zen-mode.nvim",
