@@ -145,19 +145,19 @@ local function plugins(use)
 
   use({ "JoosepAlviste/nvim-ts-context-commentstring", module = "ts_context_commentstring" })
 
+  -- use({ "nvim-treesitter/playground", cmd = "TSHighlightCapturesUnderCursor" })
+  -- use({ "nvim-treesitter/nvim-treesitter-textobjects" })
+  -- use({ "RRethy/nvim-treesitter-textsubjects" })
   use({
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
-    opt = true,
-    event = "BufRead",
+    
     requires = {
-      { "nvim-treesitter/playground", opt = true, cmd = "TSHighlightCapturesUnderCursor" },
+      { "nvim-treesitter/playground", cmd = "TSHighlightCapturesUnderCursor" },
       "nvim-treesitter/nvim-treesitter-textobjects",
       "RRethy/nvim-treesitter-textsubjects",
     },
-    config = function()
-      require("config.treesitter")
-    end,
+    config = [[require('config.treesitter')]],
   })
   -- Theme: color schemes
   -- use("tjdevries/colorbuddy.vim")
