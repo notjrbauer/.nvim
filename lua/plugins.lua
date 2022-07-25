@@ -24,14 +24,8 @@ local config = {
 local function plugins(use)
   -- Packer can manage itself as an optional plugin
   use({ "wbthomason/packer.nvim", opt = true })
-  use({ "williamboman/nvim-lsp-installer" })
+  use({ "williamboman/mason.nvim" })
   use({ "christoomey/vim-tmux-navigator" })
-  use({
-    "nathom/filetype.nvim",
-    config = function()
-      require("config.filetype")
-    end,
-  })
 
   -- Debug adapter protocol
   --   Have not yet checked this out, but looks awesome.
@@ -59,23 +53,21 @@ local function plugins(use)
   use({
     "neovim/nvim-lspconfig",
     event = "BufReadPre",
-    wants = {
-      "null-ls.nvim",
-      "nvim-lsp-ts-utils",
-      "lua-dev.nvim",
-      "cmp-nvim-lsp",
-      "nvim-lsp-installer",
-    },
     config = function()
       require("config.lsp")
     end,
     requires = {
-      "jose-elias-alvarez/null-ls.nvim",
-      "jose-elias-alvarez/nvim-lsp-ts-utils",
-      "folke/lua-dev.nvim",
-      "williamboman/nvim-lsp-installer",
+      { "jose-elias-alvarez/nvim-lsp-ts-utils", module = "nvim-lsp-ts-utils" },
+      { "jose-elias-alvarez/null-ls.nvim", module = "null-ls" },
+      { "folke/lua-dev.nvim", module = "lua-dev" },
     },
   })
+
+  -- use({
+  --   "williamboman/nvim-lsp-installer",
+  --   opt = false,
+  --   -- module = "nvim-lsp-installer",
+  -- })
 
   use({
     "SmiteshP/nvim-gps",
@@ -151,7 +143,9 @@ local function plugins(use)
   use({
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
-    
+    event = "BufRead",
+    module = "nvim-treesitter",
+
     requires = {
       { "nvim-treesitter/playground", cmd = "TSHighlightCapturesUnderCursor" },
       "nvim-treesitter/nvim-treesitter-textobjects",
@@ -165,6 +159,7 @@ local function plugins(use)
   -- use({ "tjdevries/gruvbuddy.nvim" })
   use({ "gruvbox-community/gruvbox" })
   use({ "rebelot/kanagawa.nvim" })
+  use({ "catppuccin/nvim", as = "catppuccin" })
   use({
     -- "shaunsingh/nord.nvim",
     -- "shaunsingh/moonlight.nvim",

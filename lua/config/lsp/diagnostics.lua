@@ -16,6 +16,9 @@ function M.setup()
     virtual_text = false,
     severity_sort = true,
   })
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+    border = "rounded",
+  })
 
   for type, icon in pairs(M.signs) do
     local hl = "DiagnosticSign" .. type

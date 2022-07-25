@@ -5,6 +5,7 @@ local telescope = require("telescope")
 local actions = require("telescope.actions")
 
 telescope.setup({
+  shorten_path = true,
   extensions = { fzf_native = { override_generic_sorter = false, override_file_sorter = true } },
   defaults = {
     mappings = { i = { ["<c-t>"] = trouble.open_with_trouble } },

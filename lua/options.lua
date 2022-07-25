@@ -47,21 +47,35 @@ vim.opt.undofile = true
 vim.opt.undolevels = 10000
 vim.opt.updatetime = 200 -- save swap file and trigger CursorHold
 vim.opt.wildmode = "longest:full,full" -- Command-line completion mode
-vim.opt.wrap = false -- Disable line wrap
+vim.opt.wrap = true -- Disable line wrap
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
-vim.o.shortmess = "IToOlxfitn"
-
+-- vim.o.shortmess = "IToOlxfitn"
 -- don't load the plugins below
-vim.g.loaded_gzip = 1
-vim.g.loaded_tar = 1
-vim.g.loaded_tarPlugin = 1
-vim.g.loaded_zipPlugin = 1
-vim.g.loaded_2html_plugin = 1
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_matchit = 1
-vim.g.loaded_matchparen = 1
-vim.g.loaded_fzf = 1
+local builtins = {
+  "gzip",
+  "zip",
+  "zipPlugin",
+  "fzf",
+  "tar",
+  "tarPlugin",
+  "getscript",
+  "getscriptPlugin",
+  "vimball",
+  "vimballPlugin",
+  "2html_plugin",
+  "matchit",
+  "matchparen",
+  "logiPat",
+  "rrhelper",
+  "netrw",
+  "netrwPlugin",
+  "netrwSettings",
+  "netrwFileHandlers",
+}
+
+for _, plugin in ipairs(builtins) do
+  vim.g["loaded_" .. plugin] = 1
+end
 
 -- Use proper syntax highlighting in code blocks
 local fences = {
@@ -110,6 +124,5 @@ cmd("au TextYankPost * lua vim.highlight.on_yank {}")
 -- windows to close with "q"
 vim.cmd([[autocmd FileType help,startuptime,qf,lspinfo nnoremap <buffer><silent> q :close<CR>]])
 vim.cmd([[autocmd FileType man nnoremap <buffer><silent> q :quit<CR>]])
-
 -- cmdHeight
 vim.opt.cmdheight = 0
