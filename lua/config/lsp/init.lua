@@ -8,6 +8,7 @@ require("mason").setup()
 -- })
 
 local function on_attach(client, bufnr)
+  require("nvim-navic").attach(client, bufnr)
   require("config.lsp.formatting").setup(client, bufnr)
   require("config.lsp.keys").setup(client, bufnr)
   require("lsp_signature").on_attach({

@@ -70,12 +70,13 @@ local function plugins(use)
   -- })
 
   use({
-    "SmiteshP/nvim-gps",
-    requires = "nvim-treesitter/nvim-treesitter",
+    "SmiteshP/nvim-navic",
+    module = "nvim-navic",
+    requires = "neovim/nvim-lspconfig",
     wants = "nvim-treesitter",
-    module = "nvim-gps",
     config = function()
-      require("nvim-gps").setup({ separator = "   " })
+      vim.g.navic_silence = true
+      require("nvim-navic").setup({ separator = "   " })
     end,
   })
 

@@ -3,7 +3,7 @@ local function clock()
 end
 
 local function holidays()
-  return "🌴"
+  return "🌴🌊"
   -- return "🎅🎄🌟🎁"
 end
 
@@ -50,6 +50,17 @@ local config = {
       { "diagnostics", sources = { "nvim_diagnostic" } },
       { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
       { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
+      {
+        function()
+          local navic = require("nvim-navic")
+          return navic.get_location()
+        end,
+        cond = function()
+          local navic = require("nvim-navic")
+          return navic.is_available()
+        end,
+        color = { fg = "#ff9e64" },
+      },
     },
     lualine_x = { lsp_progress, holidays },
     lualine_y = { "location" },
