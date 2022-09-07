@@ -10,8 +10,12 @@ function M.setup(client, bufnr)
   local keymap = {
     c = {
       name = "+code",
-      r = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
-      c = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename (Change)" },
+      r = {
+        function()
+          require("inc_rename").rename({ default = vim.fn.expand("<cword>") })
+        end,
+        "Rename",
+      },
       a = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code Action" },
       d = { "<cmd>lua vim.diagnostic.open_float()<CR>", "Line Diagnostics" },
       l = {
@@ -26,14 +30,17 @@ function M.setup(client, bufnr)
       },
     },
     x = {
-      s = { "<cmd>Telescope document_diagnostics<cr>", "Search Document Diagnostics" },
-      w = { "<cmd>Telescope workspace_diagnostics<cr>", "Workspace Diagnostics" },
+      d = { "<cmd>Telescope diagnostics<cr>", "Search Diagnostics" },
     },
   }
 
-  if client.name == "typescript" then
-    keymap.c.o = { "<cmd>:TSLspOrganize<CR>", "Organize Imports" }
-    keymap.c.R = { "<cmd>:TSLspRenameFile<CR>", "Rename File" }
+  if not client.server_capabilities.renameProvider then
+    keymap.c.r = nil
+  end
+
+  if client.name == "tsserver" then
+    keymap.c.o = { "<cmd>:TypescriptOrganizeImports<CR>", "Organize Imports" }
+    keymap.c.R = { "<cmd>:TypescriptRenameFile<CR>", "Rename File" }
   end
 
   local keymap_visual = {
@@ -45,27 +52,27 @@ function M.setup(client, bufnr)
 
   local keymap_goto = {
     name = "+goto",
+    d = { "<cmd>Telescope lsp_definitions<cr>", "Goto Definition" },
     r = { "<cmd>Telescope lsp_references<cr>", "References" },
     R = { "<cmd>Trouble lsp_references<cr>", "Trouble References" },
-    d = { "<Cmd>lua vim.lsp.buf.definition()<CR>", "Goto Definition" },
-    dv = { "<Cmd>vsplit | lua vim.lsp.buf.definition()<CR>", "Goto Definition" },
-    ds = { "<Cmd>split | lua vim.lsp.buf.definition()<CR>", "Goto Definition" },
+    D = { "<Cmd>Telescope lsp_declarations<CR>", "Goto Declaration" },
     s = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help" },
-    I = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto Implementation" },
-    -- I = { "<Cmd>lua vim.lsp.buf.declaration()<CR>", "Goto Declaration" },
-    t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Goto Type Definition" },
+    I = { "<cmd>Telescope lsp_implementations<CR>", "Goto Implementation" },
+    t = { "<cmd>Telescope lsp_type_definitions<cr>", "Goto Type Definition" },
   }
 
-  util.nnoremap("K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  util.nnoremap("[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-  util.nnoremap("]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-  util.nnoremap("[e", "<cmd>lua vim.diagnostic.goto_prev({severity = vim.diagnostic.severity.ERROR})<CR>", opts)
-  util.nnoremap("]e", "<cmd>lua vim.diagnostic.goto_next({severity = vim.diagnostic.severity.ERROR})<CR>", opts)
+  vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+  vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+  vim.keymap.set("n", "[e", "<cmd>lua vim.diagnostic.goto_prev({severity = vim.diagnostic.severity.ERROR})<CR>", opts)
+  vim.keymap.set("n", "]e", "<cmd>lua vim.diagnostic.goto_next({severity = vim.diagnostic.severity.ERROR})<CR>", opts)
+  vim.keymap.set("n", "[w", "<cmd>lua vim.diagnostic.goto_prev({severity = vim.diagnostic.severity.WARNING})<CR>", opts)
+  vim.keymap.set("n", "]w", "<cmd>lua vim.diagnostic.goto_next({severity = vim.diagnostic.severity.WARNING})<CR>", opts)
 
   local trigger_chars = client.server_capabilities.signatureHelpTriggerCharacters
   trigger_chars = { "," }
   for _, c in ipairs(trigger_chars) do
-    util.inoremap(c, function()
+    vim.keymap.set("i", c, function()
       vim.defer_fn(function()
         pcall(vim.lsp.buf.signature_help)
       end, 0)

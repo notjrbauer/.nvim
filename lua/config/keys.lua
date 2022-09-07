@@ -1,3 +1,5 @@
+---@diagnostic disable: missing-parameter
+
 local wk = require("which-key")
 local util = require("util")
 
@@ -12,63 +14,93 @@ wk.setup({
   key_labels = { ["<leader>"] = "SPC" },
 })
 
--- Move to window using the <ctrl> movement keys
-util.nmap("<left>", "<C-w>h")
-util.nmap("<down>", "<C-w>j")
-util.nmap("<up>", "<C-w>k")
-util.nmap("<right>", "<C-w>l")
+-- Move to window using the <> movement keys
+vim.keymap.set("n", "<left>", "<C-w>h")
+vim.keymap.set("n", "<down>", "<C-w>j")
+vim.keymap.set("n", "<up>", "<C-w>k")
+vim.keymap.set("n", "<right>", "<C-w>l")
 
 -- Resize window using <ctrl> arrow keys
-util.nnoremap("<S-Up>", ":resize +2<CR>")
-util.nnoremap("<S-Down>", ":resize -2<CR>")
-util.nnoremap("<S-Left>", ":vertical resize -2<CR>")
-util.nnoremap("<S-Right>", ":vertical resize +2<CR>")
+vim.keymap.set("n", "<S-Up>", ":resize +2<CR>")
+vim.keymap.set("n", "<S-Down>", ":resize -2<CR>")
+vim.keymap.set("n", "<S-Left>", ":vertical resize -2<CR>")
+vim.keymap.set("n", "<S-Right>", ":vertical resize +2<CR>")
 
 -- Move Lines
-util.nnoremap("<A-j>", ":m .+1<CR>==")
-util.vnoremap("<A-j>", ":m '>+1<CR>gv=gv")
-util.inoremap("<A-j>", "<Esc>:m .+1<CR>==gi")
-util.nnoremap("<A-k>", ":m .-2<CR>==")
-util.vnoremap("<A-k>", ":m '<-2<CR>gv=gv")
-util.inoremap("<A-k>", "<Esc>:m .-2<CR>==gi")
+vim.keymap.set("n", "<A-j>", ":m .+1<CR>==")
+vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv")
+vim.keymap.set("i", "<A-j>", "<Esc>:m .+1<CR>==gi")
+vim.keymap.set("n", "<A-k>", ":m .-2<CR>==")
+vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv")
+vim.keymap.set("i", "<A-k>", "<Esc>:m .-2<CR>==gi")
 
 -- Switch buffers with tab
-util.nnoremap("<C-Left>", ":bprevious<cr>")
-util.nnoremap("<C-Right>", ":bnext<cr>")
+vim.keymap.set("n", "<C-Left>", ":bprevious<cr>")
+vim.keymap.set("n", "<C-Right>", ":bnext<cr>")
 
 -- Easier pasting
-util.nnoremap("[p", ":pu!<cr>")
-util.nnoremap("]p", ":pu<cr>")
+vim.keymap.set("n", "[p", ":pu!<cr>")
+vim.keymap.set("n", "]p", ":pu<cr>")
 
--- Clear search with <esc>
-util.map("", "<esc>", ":noh<cr>")
-util.nnoremap("gw", "*N")
-util.xnoremap("gw", "*N")
+vim.keymap.set("n", "gw", "*N")
+vim.keymap.set("x", "gw", "*N")
 
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
-util.nnoremap("n", "'Nn'[v:searchforward]", { expr = true })
-util.xnoremap("n", "'Nn'[v:searchforward]", { expr = true })
-util.onoremap("n", "'Nn'[v:searchforward]", { expr = true })
-util.nnoremap("N", "'nN'[v:searchforward]", { expr = true })
-util.xnoremap("N", "'nN'[v:searchforward]", { expr = true })
-util.onoremap("N", "'nN'[v:searchforward]", { expr = true })
+vim.keymap.set("n", "n", "'Nn'[v:searchforward]", { expr = true })
+vim.keymap.set("x", "n", "'Nn'[v:searchforward]", { expr = true })
+vim.keymap.set("o", "n", "'Nn'[v:searchforward]", { expr = true })
+vim.keymap.set("n", "N", "'nN'[v:searchforward]", { expr = true })
+vim.keymap.set("x", "N", "'nN'[v:searchforward]", { expr = true })
+vim.keymap.set("o", "N", "'nN'[v:searchforward]", { expr = true })
+vim.keymap.set("i", "jj", "<esc>")
 
 -- Add undo break-points
-util.inoremap(",", ",<c-g>u")
-util.inoremap(".", ".<c-g>u")
-util.inoremap(";", ";<c-g>u")
-util.inoremap("jj", "<esc>")
+vim.keymap.set("i", ",", ",<c-g>u")
+vim.keymap.set("i", ".", ".<c-g>u")
+vim.keymap.set("i", ";", ";<c-g>u")
 
 -- telescope <ctrl-r> in command line
 -- vim.cmd([[cmap <C-R> <Plug>(TelescopeFuzzyCommandSearch)]])
-util.nnoremap("<F3>", "<cmd>NvimTreeToggle<cr>")
 
 -- markdown
-util.nnoremap("=t", "<cmd>TableFormat<cr>")
+vim.keymap.set("n", "=t", "<cmd>TableFormat<cr>")
 
 -- better indenting
-util.vnoremap("<", "<gv")
-util.vnoremap(">", ">gv")
+vim.keymap.set("v", "<", "<gv")
+vim.keymap.set("v", ">", ">gv")
+
+vim.keymap.set("n", "<space>cu", function()
+  local number = math.random(math.pow(2, 127) + 1, math.pow(2, 128))
+  return "i" .. string.format("%.0f", number)
+end, {
+  expr = true,
+})
+
+vim.keymap.set("n", "<F3>", "<cmd>NvimTreeToggle<cr>")
+vim.keymap.set("n", "<C-p>", "<cmd>lua require('fzf-lua').files()<CR>")
+vim.keymap.set("n", "<C-f>", "<cmd>lua require('fzf-lua').live_grep_native()<CR>")
+vim.keymap.set("n", "<Leader>b", "<cmd>lua require('fzf-lua').buffers()<CR>")
+vim.keymap.set("n", "<Leader>g", "<cmd>lua require('fzf-lua').git_files()<CR>")
+vim.keymap.set("n", "<Leader>lT", "<cmd>lua require('fzf-lua').tags()<CR>")
+vim.keymap.set("n", "<Leader>t", "<cmd>lua require('fzf-lua').btags()<CR>")
+vim.keymap.set("n", "<F1>", "<cmd>lua require'dap'.step_into()<CR>")
+vim.keymap.set("n", "<F2>", "<cmd>lua require'dap'.step_over()<CR>")
+vim.keymap.set("n", "<F4>", "<cmd>lua require'config.dap'.debug_test()<CR>")
+vim.keymap.set("n", "<F5>", "<cmd>lua require'dap'.continue()<CR>")
+vim.keymap.set("n", "<Leader>dB", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
+vim.keymap.set("n", "<Leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>")
+vim.keymap.set("n", "<space>dh", "<cmd>lua require'dap.ui.variables'.hover()<CR>")
+
+wk.register({
+  ["]"] = {
+    name = "next",
+    r = { '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', "Next Reference" },
+  },
+  ["["] = {
+    name = "previous",
+    r = { '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', "Next Reference" },
+  },
+})
 
 -- makes * and # work on visual mode too.
 vim.api.nvim_exec(
@@ -79,39 +111,12 @@ vim.api.nvim_exec(
     let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
     let @s = temp
   endfunction
-
   xnoremap * :<C-u>call g:VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
   xnoremap # :<C-u>call g:VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
 ]],
   false
 )
 
-util.nmap("<C-p>", "<cmd>lua require('fzf-lua').files()<CR>")
-util.nmap("<C-f>", "<cmd>lua require('fzf-lua').live_grep_native()<CR>")
-util.nmap("<Leader>b", "<cmd>lua require('fzf-lua').buffers()<CR>")
-util.nmap("<Leader>m", "<cmd>lua require('fzf-lua').command_history()<CR>")
-util.nmap("<Leader>g", "<cmd>lua require('fzf-lua').git_files()<CR>")
-util.nmap("<Leader>lT", "<cmd>lua require('fzf-lua').tags()<CR>")
-util.nmap("<Leader>t", "<cmd>lua require('fzf-lua').btags()<CR>")
-util.nmap("<F1>", "<cmd>lua require'dap'.step_into()<CR>")
-util.nmap("<F2>", "<cmd>lua require'dap'.step_over()<CR>")
-util.nmap("<F4>", "<cmd>lua require'config.dap'.debug_test()<CR>")
-util.nmap("<F5>", "<cmd>lua require'dap'.continue()<CR>")
-util.nmap("<Leader>dB", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
-util.nmap("<Leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<CR>")
-util.nmap("<space>dh", "<cmd>lua require'dap.ui.variables'.hover()<CR>")
--- vim.cmd([[nnoremap <silent> <F5> :lua require'dap'.continue()<CR>]])
--- vim.cmd([[nnoremap <silent> <F1> :lua require'dap'.step_into()<CR>]])
--- vim.cmd([[nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>]])
-
--- vim.cmd([[nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>]])
--- vim.cmd([[nnoremap <silent> <leader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>]])
--- vim.cmd([[nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>]])
--- vim.cmd([[nnoremap <silent> <space>dh :lua require('dap.ui.variables').hover()<CR>]])
-
--- util.nmap("<F5>", "<Plug>VimspectorContinue()")
--- util.nmap("<leader>db", "<Plug>VimspectorToggleBreakpoint()")
--- util.nmap("<space>dh", "<Plug>VimspectorBalloonEval")
 local leader = {
   ["w"] = {
     name = "+windows",
@@ -132,7 +137,6 @@ local leader = {
     ["s"] = { "<C-W>s", "split-window-below" },
     ["v"] = { "<C-W>v", "split-window-right" },
   },
-  c = { v = { "<cmd>Vista!!<CR>", "Vista" }, o = { "<cmd>SymbolsOutline<cr>", "Symbols Outline" } },
   b = {
     name = "+buffer",
     ["b"] = { "<cmd>:e #<cr>", "Switch to Other Buffer" },
@@ -141,6 +145,7 @@ local leader = {
     ["n"] = { "<cmd>:BufferLineCycleNext<CR>", "Next Buffer" },
     ["]"] = { "<cmd>:BufferLineCycleNext<CR>", "Next Buffer" },
     ["d"] = { "<cmd>:BDelete this<CR>", "Delete Buffer" },
+    ["D"] = { "<cmd>:bd<CR>", "Delete Buffer & Window" },
     ["g"] = { "<cmd>:BufferLinePick<CR>", "Goto Buffer" },
   },
   g = {
@@ -148,7 +153,7 @@ local leader = {
     g = { "<cmd>Neogit kind=split<CR>", "NeoGit" },
     l = {
       function()
-        util.float_terminal("lazygit")
+        require("util").float_terminal("lazygit")
       end,
       "LazyGit",
     },
@@ -258,6 +263,13 @@ local leader = {
   [","] = { "<cmd>Telescope buffers show_all_buffers=true<cr>", "Switch Buffer" },
   ["/"] = { "<cmd>Telescope live_grep<cr>", "Search" },
   [":"] = { "<cmd>Telescope command_history<cr>", "Command History" },
+  ["V"] = { "<cmd>Telescope neoclip<cr>", "Switch to Other Buffer" },
+  ["C"] = {
+    function()
+      util.clipman()
+    end,
+    "Clipman",
+  },
   q = {
     name = "+quit/session",
     q = { "<cmd>:qa<cr>", "Quit" },
@@ -268,9 +280,7 @@ local leader = {
   },
   x = {
     name = "+errors",
-    x = { "<cmd>TroubleToggle<cr>", "Trouble" },
-    w = { "<cmd>TroubleWorkspaceToggle<cr>", "Workspace Trouble" },
-    d = { "<cmd>TroubleDocumentToggle<cr>", "Document Trouble" },
+    x = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Trouble" },
     t = { "<cmd>TodoTrouble<cr>", "Todo Trouble" },
     T = { "<cmd>TodoTelescope<cr>", "Todo Telescope" },
     l = { "<cmd>lopen<cr>", "Open Location List" },

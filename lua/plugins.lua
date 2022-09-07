@@ -11,6 +11,8 @@ local config = {
       return require("packer.util").float({ border = "single" })
     end,
   },
+  opt_default = true,
+  auto_reload_compiled = false,
   -- list of plugins that should be taken from ~/projects
   -- this is NOT packer functionality!
   local_plugins = {
@@ -24,12 +26,21 @@ local config = {
 local function plugins(use)
   -- Packer can manage itself as an optional plugin
   use({ "wbthomason/packer.nvim", opt = true })
-  use({ "williamboman/mason.nvim" })
-  use({ "christoomey/vim-tmux-navigator" })
+  use({
+    "williamboman/mason.nvim",
+    module = "mason",
+    opt = false,
+  })
+  use({
+    "williamboman/mason-lspconfig.nvim",
+    module = "mason-lspconfig",
+    opt = false,
+  })
+  use({ "christoomey/vim-tmux-navigator", opt = false })
 
   -- Debug adapter protocol
   --   Have not yet checked this out, but looks awesome.
-  -- use 'puremourning/vimspector'
+  -- use 'puremourning/vimspectorop'
   use("rcarriga/nvim-dap-ui")
   use("theHamsta/nvim-dap-virtual-text")
   use({
@@ -38,7 +49,7 @@ local function plugins(use)
       require("config.dap").setup()
     end,
   })
-  use("puremourning/vimspector")
+  --  use("puremourning/vimspector")
   use({
     "luukvbaal/stabilize.nvim",
     config = function()
@@ -56,18 +67,41 @@ local function plugins(use)
     config = function()
       require("config.lsp")
     end,
-    requires = {
-      { "jose-elias-alvarez/nvim-lsp-ts-utils", module = "nvim-lsp-ts-utils" },
-      { "jose-elias-alvarez/null-ls.nvim", module = "null-ls" },
-      { "folke/lua-dev.nvim", module = "lua-dev" },
-    },
+    requires = {},
   })
 
-  -- use({
-  --   "williamboman/nvim-lsp-installer",
-  --   opt = false,
-  --   -- module = "nvim-lsp-installer",
-  -- })
+  use({ "jose-elias-alvarez/typescript.nvim", module = "typescript" })
+  use({ "jose-elias-alvarez/null-ls.nvim", module = "null-ls" })
+  use({ "folke/lua-dev.nvim", module = "lua-dev" })
+  use({
+    "j-hui/fidget.nvim",
+    module = "fidget",
+    config = function()
+      require("fidget").setup({
+        window = {
+          relative = "editor",
+        },
+      })
+      -- HACK: prevent error when exiting Neovim
+      vim.api.nvim_create_autocmd("VimLeavePre", { command = [[silent! FidgetClose]] })
+    end,
+  })
+  use({
+    "smjonas/inc-rename.nvim",
+    module = "inc_rename",
+    config = function()
+      require("inc_rename").setup()
+    end,
+  })
+
+  use({
+    "AckslD/nvim-neoclip.lua",
+    event = "TextYankPost",
+    module = { "neoclip", "telescope._extensions.neoclip" },
+    config = function()
+      require("neoclip").setup()
+    end,
+  })
 
   use({
     "SmiteshP/nvim-navic",
@@ -82,36 +116,32 @@ local function plugins(use)
 
   use({
     "hrsh7th/nvim-cmp",
-    -- commit = "f2e7685c219d69d7a0feebf5f319e348203ff9b4",
+    -- opt = false,
+
+    event = "InsertEnter",
     config = function()
-      require("config.compe")
+      require("config.cmp")
     end,
-  })
-  use({
-    "hrsh7th/cmp-nvim-lsp",
-  })
-  use({
-    "hrsh7th/cmp-buffer",
-  })
-  use({
-    "hrsh7th/cmp-path",
-  })
-  use({
-    "saadparwaiz1/cmp_luasnip",
-  })
-  use({ "rafamadriz/friendly-snippets" })
-  use({
-    "windwp/nvim-autopairs",
-    config = function()
-      require("config.autopairs")
-    end,
+    -- module = "cmp",
+    requires = {
+      { "hrsh7th/cmp-nvim-lsp", module = "cmp_nvim_lsp" },
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "saadparwaiz1/cmp_luasnip",
+    },
   })
   use({
     "L3MON4D3/LuaSnip",
-    wants = "friendly-snippets",
+    module = "luasnip",
     config = function()
       require("config.snippets")
     end,
+    requires = {
+      "rafamadriz/friendly-snippets",
+      config = function()
+        require("luasnip.loaders.from_vscode").lazy_load()
+      end,
+    },
   })
 
   use("tpope/vim-dadbod")
@@ -125,6 +155,9 @@ local function plugins(use)
   use({
     "simrat39/symbols-outline.nvim",
     cmd = { "SymbolsOutline" },
+    config = function()
+      require("symbols-outline").setup()
+    end,
   })
 
   use({
@@ -132,28 +165,33 @@ local function plugins(use)
     opt = true,
     keys = { "gc", "gcc", "gbc" },
     config = function()
-      require("config.comments")
+      require("Comment").setup({})
     end,
   })
 
-  use({ "JoosepAlviste/nvim-ts-context-commentstring", module = "ts_context_commentstring" })
+  use({
+    "danymat/neogen",
+    module = "neogen",
+    config = function()
+      require("neogen").setup({ snippet_engine = "luasnip" })
+    end,
+    requires = "nvim-treesitter/nvim-treesitter",
+  })
 
-  -- use({ "nvim-treesitter/playground", cmd = "TSHighlightCapturesUnderCursor" })
-  -- use({ "nvim-treesitter/nvim-treesitter-textobjects" })
-  -- use({ "RRethy/nvim-treesitter-textsubjects" })
   use({
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
     event = "BufRead",
     module = "nvim-treesitter",
-
     requires = {
-      { "nvim-treesitter/playground", cmd = "TSHighlightCapturesUnderCursor" },
       "nvim-treesitter/nvim-treesitter-textobjects",
       "RRethy/nvim-treesitter-textsubjects",
+      "nvim-treesitter/nvim-treesitter-refactor",
     },
     config = [[require('config.treesitter')]],
   })
+
+  use({ "nvim-treesitter/playground", cmd = "TSHighlightCapturesUnderCursor" })
   -- Theme: color schemes
   -- use("tjdevries/colorbuddy.vim")
   -- use({ "tjdevries/colorbuddy.vim" })
@@ -162,7 +200,7 @@ local function plugins(use)
   use({ "rebelot/kanagawa.nvim" })
   use({ "catppuccin/nvim", as = "catppuccin" })
   use({
-    -- "shaunsingh/nord.nvim",
+    -- "shaunsingh/nord.nvim"pt = ,
     -- "shaunsingh/moonlight.nvim",
     -- { "olimorris/onedark.nvim", requires = "rktjmp/lush.nvim" },
     -- "joshdick/onedark.vim",
@@ -185,16 +223,12 @@ local function plugins(use)
     -- "Th3Whit3Wolf/one-nvim"
 
     "folke/tokyonight.nvim",
+    opt = false,
 
     -- event = "VimEnter",
     config = function()
       require("config.theme")
     end,
-  })
-
-  use({
-    "catppuccin/nvim",
-    as = "catppuccin",
   })
 
   -- Theme: icons
@@ -217,7 +251,7 @@ local function plugins(use)
     end,
   })
   use({ "nvim-lua/plenary.nvim", module = "plenary" })
-  use({ "nvim-lua/popup.nvim", module = "popup" })
+  -- use({ "nvim-lua/popup.nvim", module = "popup" })
 
   use({
     "windwp/nvim-spectre",
@@ -245,36 +279,20 @@ local function plugins(use)
   })
 
   -- Fuzzy finder
-  use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
   use({
     "nvim-telescope/telescope.nvim",
-    opt = true,
     config = function()
       require("config.telescope")
     end,
     cmd = { "Telescope" },
     module = "telescope",
     keys = { "<leader><space>", "<leader>fz", "<leader>pp" },
-    wants = {
-      "plenary.nvim",
-      "popup.nvim",
-      "telescope-z.nvim",
-      -- "telescope-frecency.nvim",
-      "telescope-fzf-native.nvim",
-      "telescope-project.nvim",
-      "trouble.nvim",
-      "telescope-symbols.nvim",
-      "telescope-dap.nvim",
-    },
     requires = {
-      "nvim-telescope/telescope-z.nvim",
-      "nvim-telescope/telescope-project.nvim",
-      "nvim-telescope/telescope-dap.nvim",
-      "nvim-lua/popup.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope-symbols.nvim",
-      "nvim-telescope/telescope-fzf-native.nvim",
-      -- { "nvim-telescope/telescope-frecency.nvim", requires = "tami5/sql.nvim" }
+      { "nvim-telescope/telescope-file-browser.nvim", module = "telescope._extensions.file_browser" },
+      { "nvim-telescope/telescope-z.nvim", module = "telescope._extensions.z" },
+      { "nvim-telescope/telescope-project.nvim", module = "telescope._extensions.project" },
+      { "nvim-telescope/telescope-symbols.nvim", module = "telescope._extensions.symbols" },
+      { "nvim-telescope/telescope-fzf-native.nvim", module = "telescope._extensions.fzf", run = "make" },
     },
   })
 
@@ -291,16 +309,24 @@ local function plugins(use)
   use({
     "akinsho/bufferline.nvim",
     event = "BufReadPre",
-    wants = "nvim-web-devicons",
     config = function()
       require("config.bufferline")
+    end,
+  })
+
+  -- Autopairs
+  use({
+    "windwp/nvim-autopairs",
+    module = "nvim-autopairs",
+    config = function()
+      require("config.autopairs")
     end,
   })
 
   -- Terminal
   use({
     "akinsho/toggleterm.nvim",
-    keys = "<M-`>",
+    keys = "<C-/>",
     config = function()
       require("config.terminal")
     end,
@@ -321,23 +347,15 @@ local function plugins(use)
       require("config.specs")
     end,
   })
-  -- use { "Xuyuanp/scrollbar.nvim", config = function() require("config.scrollbar") end }
 
   -- Git Gutter
   use({
     "lewis6991/gitsigns.nvim",
     event = "BufReadPre",
-    wants = "plenary.nvim",
-    requires = { "nvim-lua/plenary.nvim" },
     config = function()
       require("config.gitsigns")
     end,
   })
-  -- use {
-  --   "kdheepak/lazygit.nvim",
-  --   cmd = "LazyGit",
-  --   config = function() vim.g.lazygit_floating_window_use_plenary = 0 end
-  -- }
   use({
     "TimUntersberger/neogit",
     cmd = "Neogit",
@@ -353,11 +371,10 @@ local function plugins(use)
     config = function()
       require("config.lualine")
     end,
-    wants = "nvim-web-devicons",
   })
 
   use({
-    "norcalli/nvim-colorizer.lua",
+    "NvChad/nvim-colorizer.lua",
     event = "BufReadPre",
     config = function()
       require("config.colorizer")
@@ -381,36 +398,27 @@ local function plugins(use)
     cmd = { "MarkdownPreview" },
   })
 
-  -- use { "tjdevries/train.nvim", cmd = { "TrainClear", "TrainTextObj", "TrainUpDown", "TrainWord" } }
-
-  -- use({ "wfxr/minimap.vim", config = function()
-  --   require("config.minimap")
-  -- end })
-
   use({
-    "phaazon/hop.nvim",
-    keys = { "gh" },
-    cmd = { "HopWord", "HopChar1" },
+    "ggandor/leap.nvim",
+    keys = { "s", "S", "gh" },
     config = function()
-      require("util").nmap("gh", "<cmd>HopWord<CR>")
-      -- require("util").nmap("s", "<cmd>HopChar1<CR>")
-      -- you can configure Hop the way you like here; see :h hop-config
-      require("hop").setup({})
-    end,
-  })
-
-  use({
-    "ggandor/lightspeed.nvim",
-    event = "BufReadPost",
-    config = function()
-      require("config.lightspeed")
+      require("leap").setup({
+        case_sensitive = true,
+      })
+      require("leap").set_default_keymaps()
+      vim.keymap.set("n", "gh", function()
+        vim.notify("hop")
+        require("leap").leap({
+          target_windows = { vim.fn.win_getid() },
+        })
+      end, {})
     end,
   })
 
   use({
     "folke/trouble.nvim",
+    module = "trouble",
     event = "BufReadPre",
-    wants = "nvim-web-devicons",
     cmd = { "TroubleToggle", "Trouble" },
     config = function()
       require("trouble").setup({ auto_open = false })
@@ -463,9 +471,8 @@ local function plugins(use)
   use({
     "RRethy/vim-illuminate",
     event = "CursorHold",
-    module = "illuminate",
     config = function()
-      vim.g.Illuminate_delay = 1000
+      require("illuminate").configure({ delay = 200 })
     end,
   })
 
@@ -473,22 +480,22 @@ local function plugins(use)
 
   -- use("DanilaMihailov/vim-tips-wiki")
   use("nanotee/luv-vimdocs")
-  use({
-    "andymass/vim-matchup",
-    event = "CursorMoved",
-    config = function()
-      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
-    end,
-  })
-  use("kmonad/kmonad-vim")
   -- use({
-  --   "https://gitlab.com/yorickpeterse/nvim-dd.git",
+  --   "andymass/vim-matchup",
+  --   event = "CursorMoved",
   --   config = function()
-  --     require("dd").setup({
-  --       timeout = 1000,
-  --     })
+  --     vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
   --   end,
   -- })
+  use("kmonad/kmonad-vim")
+  use({
+    "https://gitlab.com/yorickpeterse/nvim-dd.git",
+    config = function()
+      require("dd").setup({
+        timeout = 1000,
+      })
+    end,
+  })
 end
 
 return packer.setup(config, plugins)

@@ -9,22 +9,37 @@ local function setup()
       "cpp",
       "css",
       "fish",
+      "gitignore",
       "go",
       "graphql",
+      "help",
       "html",
+      "http",
+      "java",
       "javascript",
+      "jsdoc",
       "jsonc",
       "latex",
       "lua",
       "markdown",
+      "meson",
+      "ninja",
+      "nix",
+      "norg",
+      "php",
       "python",
       "regex",
+      "regex",
       "rust",
+      "scss",
+      "sql",
       "svelte",
       "toml",
       "tsx",
       "typescript",
+      "vim",
       "vue",
+      "wgsl",
       "yaml",
       -- "wgsl",
       -- "json",
@@ -42,6 +57,24 @@ local function setup()
         node_incremental = "<C-n>",
         scope_incremental = "<C-s>",
         node_decremental = "<C-r>",
+      },
+    },
+    refactor = {
+      smart_rename = {
+        enable = true,
+        client = {
+          smart_rename = "<leader>cr",
+        },
+      },
+      navigation = {
+        enable = true,
+        keymaps = {
+          goto_definition = "gd",
+          -- list_definitions = "gnD",
+          -- list_definitions_toc = "gO",
+          -- goto_next_usage = "<a-*>",
+          -- goto_previous_usage = "<a-#>",
+        },
       },
     },
     query_linter = {
@@ -104,7 +137,7 @@ local function setup()
   })
 
   -- Add Markdown
-  local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+  -- local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
   -- parser_config.jsonc.used_by = "json"
   local ft_to_parser = require("nvim-treesitter.parsers").filetype_to_parsername
   ft_to_parser.json = "jsonc" -- the someft filetype will use the python parser and queries.
