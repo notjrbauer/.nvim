@@ -8,8 +8,6 @@ function M.setup(options)
     sources = {
       nls.builtins.formatting.prettier,
       nls.builtins.formatting.stylua,
-      nls.builtins.formatting.fish_indent,
-      nls.builtins.formatting.fixjson.with({ filetypes = { "jsonc" } }),
       -- nls.builtins.formatting.eslint_d,
       nls.builtins.formatting.goimports.with({ filetypes = { "go" } }),
       nls.builtins.diagnostics.shellcheck,

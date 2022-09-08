@@ -22,7 +22,6 @@ M.icons = {
   Unit = " ",
   Value = " ",
   Variable = " ",
-  ["vim-dadbod-completion"] = "[DB]",
 }
 
 function M.cmp_format()
@@ -31,13 +30,6 @@ function M.cmp_format()
       vim_item.kind = M.icons[vim_item.kind] .. vim_item.kind
     end
     return vim_item
-  end
-end
-
-function M.setup()
-  local kinds = vim.lsp.protocol.CompletionItemKind
-  for i, kind in ipairs(kinds) do
-    kinds[i] = M.icons[kind] or kind
   end
 end
 

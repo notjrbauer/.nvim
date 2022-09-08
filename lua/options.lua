@@ -47,7 +47,7 @@ vim.opt.undofile = true
 vim.opt.undolevels = 10000
 vim.opt.updatetime = 200 -- save swap file and trigger CursorHold
 vim.opt.wildmode = "longest:full,full" -- Command-line completion mode
-vim.opt.wrap = true -- Disable line wrap
+vim.opt.wrap = false -- Disable line wrap
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
 -- vim.o.shortmess = "IToOlxfitn"
 -- don't load the plugins below
@@ -113,10 +113,29 @@ cmd([[
   autocmd InsertEnter,WinLeave * set nocursorline
 ]])
 
+-- Fix conceallevel for json files
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = "json",
+  callback = function()
+    vim.wo.conceallevel = 0
+  end,
+})
+
 -- go to last loc when opening a buffer
-cmd([[
-  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
-]])
+vim.api.nvim_create_autocmd("BufReadPre", {
+  pattern = "*",
+  callback = function()
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "<buffer>",
+      once = true,
+      callback = function()
+        vim.cmd(
+          [[if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]]
+        )
+      end,
+    })
+  end,
+})
 
 -- Highlight on yank
 cmd("au TextYankPost * lua vim.highlight.on_yank {}")

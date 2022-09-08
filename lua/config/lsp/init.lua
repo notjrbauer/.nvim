@@ -1,5 +1,4 @@
--- require("lua-dev").setup()
-
+require("lua-dev").setup()
 require("config.mason").setup()
 require("config.lsp.diagnostics").setup()
 require("fidget").setup({ text = { spinner = "dots" } })
@@ -51,7 +50,9 @@ local options = {
 
 for server, opts in pairs(servers) do
   opts = vim.tbl_deep_extend("force", {}, options, opts or {})
-  if server == "tsserver" then
+  if server == "rust_analyzer" then
+    require("config.rust").setup({ opts })
+  elseif server == "tsserver" then
     require("typescript").setup({ server = opts })
   else
     require("lspconfig")[server].setup(opts)
