@@ -25,20 +25,30 @@ local function plugins(use)
   -- Packer can manage itself as an optional plugin
   use({ "wbthomason/packer.nvim" })
   use({ "stevearc/dressing.nvim" })
-  use({
-    "rcarriga/nvim-notify",
-    event = "VimEnter",
-    config = function()
-      vim.notify = require("notify")
-    end,
-  })
+  -- use({
+  -- "rcarriga/nvim-notify",
+  -- event = "VimEnter",
+  -- config = function()
+  -- vim.notify = require("notify")
+  -- end,
+  -- })
   -- LSP
   use({
     "neovim/nvim-lspconfig",
-    -- event = "BufReadPre",
     config = function()
-      require("config.lsp")
+      require("config.lsp").config()
     end,
+  })
+
+  use({
+    "anuvyklack/windows.nvim",
+    config = function()
+      require("config.windows").config()
+    end,
+    requires = {
+      { "anuvyklack/middleclass", module = "middleclass" },
+      { "anuvyklack/animation.nvim", module = "animation" },
+    },
   })
 
   use({ "jose-elias-alvarez/typescript.nvim", module = "typescript" })
@@ -74,10 +84,22 @@ local function plugins(use)
       require("nvim-navic").setup({ separator = "   " })
     end,
   })
+
   use({
     "simrat39/rust-tools.nvim",
     module = "rust-tools",
   })
+
+  use({ "famiu/bufdelete.nvim", cmd = "Bdelete" })
+
+  use({
+    "petertriho/nvim-scrollbar",
+    event = "BufReadPost",
+    config = function()
+      require("config.scrollbar")
+    end,
+  })
+
   use({
     "hrsh7th/nvim-cmp",
     module = "cmp",
@@ -88,8 +110,10 @@ local function plugins(use)
     requires = {
       { "hrsh7th/cmp-nvim-lsp", module = "cmp_nvim_lsp" },
       "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-emoji",
       "hrsh7th/cmp-path",
       "saadparwaiz1/cmp_luasnip",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
     },
   })
   -- Autopairs
@@ -127,9 +151,8 @@ local function plugins(use)
       require("Comment").setup({})
     end,
   })
-  use({ "nvim-treesitter/nvim-treesitter-textobjects" })
-  use({ "RRethy/nvim-treesitter-textsubjects" })
-  use({ "nvim-treesitter/nvim-treesitter-refactor" })
+  use({ "nvim-treesitter/tree-sitter-query" })
+  -- use({ "nvim-treesitter/nvim-treesitter-textobjects" })
   use({
     "nvim-treesitter/nvim-treesitter",
     -- event = "BufRead",
@@ -161,31 +184,7 @@ local function plugins(use)
       require("stabilize").setup()
     end,
   })
-  --
-  -- use({ "kazhala/close-buffers.nvim", cmd = "BDelete" })
-  -- use({ "ray-x/lsp_signature.nvim" })
-  --
-  --
-  use({
-    "smjonas/inc-rename.nvim",
-    module = "inc_rename",
-    config = function()
-      require("inc_rename").setup()
-    end,
-  })
-  --
-  -- use({
-  --   "AckslD/nvim-neoclip.lua",
-  --   event = "TextYankPost",
-  --   module = { "neoclip", "telescope._extensions.neoclip" },
-  --   config = function()
-  --     require("neoclip").setup()
-  --   end,
-  -- })
-  --
-  --
-  --
-  --
+
   use("tpope/vim-dadbod")
   use({ "kristijanhusak/vim-dadbod-completion" })
   use({
@@ -343,35 +342,14 @@ local function plugins(use)
     end,
   })
   use({ "npxbr/glow.nvim", cmd = "Glow" })
-  --
-  use({
-    "plasticboy/vim-markdown",
-    requires = "godlygeek/tabular",
-    ft = "markdown",
-  })
-  use({
-    "iamcco/markdown-preview.nvim",
-    run = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-    ft = "markdown",
-    cmd = { "MarkdownPreview" },
-  })
 
   use({
-    "ggandor/leap.nvim",
-    keys = { "s", "S", "gh" },
+    "phaazon/hop.nvim",
+    cmd = "HopWord",
+    module = "hop",
+    keys = { "gh", "f", "F", "t", "T" },
     config = function()
-      require("leap").setup({
-        case_sensitive = true,
-      })
-      require("leap").set_default_keymaps()
-      vim.keymap.set("n", "gh", function()
-        -- vim.notify("hop")
-        require("leap").leap({
-          target_windows = { vim.fn.win_getid() },
-        })
-      end, {})
+      require("config.jump")
     end,
   })
 
@@ -429,13 +407,6 @@ local function plugins(use)
   -- --     require("config.diffview")
   -- --   end,
   -- -- })
-  use({
-    "RRethy/vim-illuminate",
-    event = "CursorHold",
-    config = function()
-      require("illuminate").configure({ delay = 200 })
-    end,
-  })
   use("nanotee/luv-vimdocs")
   use({
     "andymass/vim-matchup",

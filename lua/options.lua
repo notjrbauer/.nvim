@@ -1,20 +1,24 @@
-local cmd = vim.cmd
 local indent = 2
-
---[[ vim.bo.expandtab = true -- Use spaces instead of tabs
-vim.bo.shiftwidth = indent -- Size of an indent
-vim.bo.smartindent = true -- Insert indents automatically
-vim.bo.undofile = true ]]
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 vim.opt.autowrite = true -- enable auto write
 vim.opt.clipboard = "unnamedplus" -- sync with system clipboard
-vim.opt.conceallevel = 2 -- Hide * markup for bold and italic
-vim.opt.concealcursor = "n" -- Hide * markup for bold and italic
+vim.opt.concealcursor = "nc" -- Hide * markup for bold and italic
+vim.opt.conceallevel = 3 -- Hide * markup for bold and italic
 vim.opt.confirm = true -- confirm to save changes before exiting modified buffer
 vim.opt.cursorline = true -- Enable highlighting of the current line
 vim.opt.expandtab = true -- Use spaces instead of tabs
+
+if vim.fn.has("nvim-0.8") ~= 0 then
+  vim.opt.cmdheight = 1
+  local keymap_set = vim.keymap.set
+  vim.keymap.set = function(mode, lhs, rhs, opts)
+    opts = opts or {}
+    opts.silent = opts.silent ~= false
+    return keymap_set(mode, lhs, rhs, opts)
+  end
+end
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- TreeSitter folding
 -- vim.opt.foldlevel = 6
 -- vim.opt.foldmethod = "expr" -- TreeSitter folding
@@ -39,6 +43,10 @@ vim.opt.sidescrolloff = 8 -- Columns of context
 vim.opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
 vim.opt.smartcase = true -- Don't ignore case with capitals
 vim.opt.smartindent = true -- Insert indents automatically
+
+-- if vim.fn.has("nvim-0.8") == 1 then
+--   vim.opt.spell = true -- Put new windows below current
+-- end
 vim.opt.splitbelow = true -- Put new windows below current
 vim.opt.splitright = true -- Put new windows right of current
 vim.opt.tabstop = indent -- Number of spaces tabs count for
@@ -49,7 +57,21 @@ vim.opt.updatetime = 200 -- save swap file and trigger CursorHold
 vim.opt.wildmode = "longest:full,full" -- Command-line completion mode
 vim.opt.wrap = false -- Disable line wrap
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
+vim.opt.fillchars = {
+  --   horiz = "━",
+  --   horizup = "┻",
+  --   horizdown = "┳",
+  --   vert = "┃",
+  --   vertleft = "┫",
+  --   vertright = "┣",
+  --   verthoriz = "╋",im.o.fillchars = [[eob: ,
+  -- fold = " ",
+  foldopen = "",
+  -- foldsep = " ",
+  foldclose = "",
+}
 -- vim.o.shortmess = "IToOlxfitn"
+
 -- don't load the plugins below
 local builtins = {
   "gzip",
@@ -93,30 +115,29 @@ local fences = {
 }
 vim.g.markdown_fenced_languages = fences
 
--- plasticboy/vim-markdown
-vim.g.vim_markdown_folding_level = 10
-vim.g.vim_markdown_fenced_languages = fences
-vim.g.vim_markdown_folding_style_pythonic = 1
-vim.g.vim_markdown_conceal_code_blocks = 0
-vim.g.vim_markdown_frontmatter = 1
-vim.g.vim_markdown_strikethrough = 1
-
 vim.cmd([[autocmd FileType markdown nnoremap gO <cmd>Toc<cr>]])
 vim.cmd([[autocmd FileType markdown setlocal spell]])
 
 -- Check if we need to reload the file when it changed
-cmd("au FocusGained * :checktime")
+vim.cmd("au FocusGained * :checktime")
 
 -- show cursor line only in active window
-cmd([[
+vim.cmd([[
   autocmd InsertLeave,WinEnter * set cursorline
   autocmd InsertEnter,WinLeave * set nocursorline
 ]])
 
+-- create directories when needed, when saving a file
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = vim.api.nvim_create_augroup("auto_create_dir", { clear = true }),
+  command = [[call mkdir(expand('<afile>:p:h'), 'p')]],
+})
+
 -- Fix conceallevel for json files
 vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = "json",
+  pattern = { "json", "jsonc" },
   callback = function()
+    vim.wo.spell = false
     vim.wo.conceallevel = 0
   end,
 })
@@ -138,10 +159,8 @@ vim.api.nvim_create_autocmd("BufReadPre", {
 })
 
 -- Highlight on yank
-cmd("au TextYankPost * lua vim.highlight.on_yank {}")
+vim.cmd("au TextYankPost * lua vim.highlight.on_yank {}")
 
 -- windows to close with "q"
 vim.cmd([[autocmd FileType help,startuptime,qf,lspinfo nnoremap <buffer><silent> q :close<CR>]])
 vim.cmd([[autocmd FileType man nnoremap <buffer><silent> q :quit<CR>]])
--- cmdHeight
--- vim.opt.cmdheight = 0

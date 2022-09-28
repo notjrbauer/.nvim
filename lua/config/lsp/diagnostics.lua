@@ -5,21 +5,17 @@ M.signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 function M.setup()
   -- Automatically update diagnostics
   vim.diagnostic.config({
-    virtual_text = false,
-    signs = true,
-    underline = false,
-    everity_sort = true,
+    underline = true,
     update_in_insert = false,
-  })
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = false,
-    update_in_insert = false,
-    virtual_text = false,
+    virtual_text = { spacing = 4, prefix = "●" },
     severity_sort = true,
   })
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "rounded",
-  })
+
+  vim.lsp.handlers["workspace/diagnostic/refresh"] = function(_, _, ctx)
+    local ns = vim.lsp.diagnostic.get_namespace(ctx.client_id)
+    pcall(vim.diagnostic.reset, ns)
+    return true
+  end
 
   for type, icon in pairs(M.signs) do
     local hl = "DiagnosticSign" .. type

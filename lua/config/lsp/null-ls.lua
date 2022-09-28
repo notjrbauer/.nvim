@@ -8,10 +8,12 @@ function M.setup(options)
     sources = {
       nls.builtins.formatting.prettier,
       nls.builtins.formatting.stylua,
+      nls.builtins.formatting.goimports,
       -- nls.builtins.formatting.eslint_d,
-      nls.builtins.formatting.goimports.with({ filetypes = { "go" } }),
       nls.builtins.diagnostics.shellcheck,
-      nls.builtins.diagnostics.selene,
+      nls.builtins.formatting.deno_fmt.with({
+        filetypes = { "markdown" }, -- only runs `deno fmt` for markdown
+      }),
       nls.builtins.formatting.zigfmt,
       -- nls.builtins.code_actions.gitsigns,
     },
